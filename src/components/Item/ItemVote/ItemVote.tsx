@@ -48,9 +48,9 @@ const ItemVote = (props: ItemProps) => {
             <Border />
             {props.votes.map((itemVote, index) => {
               return (
-                <Row>
+                <Row key={index}>
                   <Square />
-                  <CommentItem key={index}>{itemVote.comment}</CommentItem>
+                  <CommentItem>{itemVote.comment}</CommentItem>
                 </Row>
               );
             })}
