@@ -1,25 +1,43 @@
 import { useEffect, useState } from "react";
 import ItemInit from "../../components/Item/ItemInit/ItemInit";
 import useHttp from "../../hooks/useHttp";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import BasePage from "../BasePage";
 import { ItemType } from "../../types";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+import Modal from "../../components/Modal/Modal";
+import { MIN_NUM_OF_VOTE } from "../../theme";
 
 const InitCartPage = () => {
-  const params = useParams();
   const [items, setItems] = useState<ItemType[]>([]);
   const [votingList, setVotingList] = useState<ItemType[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [success, setSuccess] = useState<Boolean>(false);
+  const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
-    
+  const [searchParams] = useSearchParams();
+
   const {
     isLoading: isLoadingItems,
     error: isErrorItems,
     sendRequest: getItemsFromCart,
   } = useHttp();
-      
-  const { sendRequest: sendItemsToVote } = useHttp();
+
+  const {
+    isLoading: isLoadingSendItems,
+    error: isErrorSendItems,
+    sendRequest: sendItemsToVote,
+  } = useHttp();
+
+  const addOrRemoveItem = (item: ItemType) => {
+    const index = votingList.indexOf(item);
+    if (index >= MIN_NUM_OF_VOTE) {
+      votingList.splice(index, 1);
+    } else {
+      setVotingList((votingList) => [...votingList, item]);
+    }
+  };
 
   const content = isErrorItems ? (
     "Request failed!"
@@ -51,23 +69,33 @@ const InitCartPage = () => {
     };
     getItemsFromCart(
       {
-        //${params.id}
-        url: `https://initvoting.azurewebsites.net/api/initvote?id=122323224`,
+        url: `https://initvoting.azurewebsites.net/api/initvote?id=${searchParams.get('id')}`,
       },
       transformItems
     );
     return () => {
       setItems([]);
     };
-  }, [getItemsFromCart]);
+  }, [getItemsFromCart, searchParams]);
+
+  const closeModal = () => {
+    if (success) {
+      navigate("/resultsPage");
+    }
+    !isLoadingSendItems && setShowModal(false);
+  };
 
   const onAskFriends = async () => {
-    if (!votingList.length) {
-      alert("You need to add items");
-    }
+    setShowModal(true);
+    !votingList.length
+      ? setMessage("You need to add items")
+      : setMessage("Loading...");
     const responseDate = (data: any) => {
-      data && alert("Your items are on the way to your friends!");
-      navigate("/resultsPage");
+      isErrorSendItems
+        ? setMessage("Try again!")
+        : data.products &&
+          setMessage("Your items are on the way to your friends!");
+      if (data) setSuccess(true);
     };
     votingList.length &&
       sendItemsToVote(
@@ -82,15 +110,7 @@ const InitCartPage = () => {
         responseDate
       );
   };
-
-  const addOrRemoveItem = (item: ItemType) => {
-    const index = votingList.indexOf(item);
-    if (index > -1) {
-      votingList.splice(index, 1);
-    } else {
-      setVotingList((votingList) => [...votingList, item]);
-    }
-  };
+  
   return (
     <BasePage>
       <BasePage.Header>
@@ -102,6 +122,12 @@ const InitCartPage = () => {
         <BasePage.Button onClick={onAskFriends}>
           Ask your friends
         </BasePage.Button>
+        <Modal
+          message={message}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          closeModal={closeModal}
+        />
       </BasePage.Footer>
     </BasePage>
   );

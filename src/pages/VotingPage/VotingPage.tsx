@@ -4,16 +4,18 @@ import Loader from "../../components/Loader/Loader";
 import useHttp from "../../hooks/useHttp";
 import { ItemType } from "../../types";
 import BasePage from "../BasePage";
+import { useSearchParams } from "react-router-dom";
 
 const VotingPage = () => {
   const [items, setItems] = useState<ItemType[]>([]);
+  const [searchParams] = useSearchParams();
   const {
     isLoading: isLoadingItems,
     error: isErrorItems,
     sendRequest: getItemsToVoting,
   } = useHttp();
   const { sendRequest: getUrlBack } = useHttp();
-  
+
   const content = isErrorItems ? (
     "Request failed!"
   ) : isLoadingItems ? (
@@ -40,15 +42,16 @@ const VotingPage = () => {
     };
     getItemsToVoting(
       {
-        //${params.id}
-        url: `https://initvoting.azurewebsites.net/api/votingresults?id=73WakrfVbNJBaAmhQtEeDv`,
+        url: `https://initvoting.azurewebsites.net/api/votingresults?id=${searchParams.get(
+          "id"
+        )}`,
       },
       transformItems
     );
     return () => {
       setItems([]);
     };
-  }, [getItemsToVoting]);
+  }, [getItemsToVoting, searchParams]);
 
   const onDoneVoting = async () => {
     const transformUrl = (data: any) => {
