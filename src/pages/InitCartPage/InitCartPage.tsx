@@ -69,9 +69,9 @@ const InitCartPage = () => {
     };
     getItemsFromCart(
       {
-        url: `https://initvoting.azurewebsites.net/api/initvote?id=${searchParams.get(
+        url: `https://prod-138.westeurope.logic.azure.com/workflows/a66a3ae4989f47ef9aeb1a8b4158d554/triggers/manual/paths/invoke/ids/${searchParams.get(
           "id"
-        )}`,
+        )}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=YpXCYZROZ0tRlysYusCsu-xEoBcqMVjyoTmqBQ-c6Lw`,
       },
       transformItems
     );

@@ -10,11 +10,12 @@ interface ModalProps {
   showModal: Boolean;
   setShowModal: (value: boolean) => void;
   message: string;
-  closeModal : () => void;
+  closeModal: () => void;
 }
 
 export const Modal = (props: ModalProps) => {
-
+  const setShowModal = props.setShowModal;
+  const showModal = props.showModal;
   const keyPress = useCallback(
     (e) => {
       if (e.key === "Escape" && props.showModal) {
@@ -22,7 +23,7 @@ export const Modal = (props: ModalProps) => {
         console.log("I pressed");
       }
     },
-    [props.setShowModal, props.showModal]
+    [setShowModal, showModal]
   );
 
   useEffect(() => {
@@ -33,14 +34,10 @@ export const Modal = (props: ModalProps) => {
   return (
     <>
       {props.showModal ? (
-        <Background >
+        <Background>
           <ModalWrapper>
-            <ModalContent>
-              {props.message}
-            </ModalContent>
-            <CloseModalButton onClick={props.closeModal}  >
-              Ok
-            </CloseModalButton>
+            <ModalContent>{props.message}</ModalContent>
+            <CloseModalButton onClick={props.closeModal}>Ok</CloseModalButton>
           </ModalWrapper>
         </Background>
       ) : null}
