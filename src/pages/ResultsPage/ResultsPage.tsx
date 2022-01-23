@@ -75,9 +75,10 @@ const ResultsPage = () => {
     };
     getItemsToVoting(
       {
-        url: `https://initvoting.azurewebsites.net/api/initvoting?id=${searchParams.get(
-          "id"
-        )}`,
+        // url: `https://initvoting.azurewebsites.net/api/initvoting?id=${searchParams.get(
+        //   "id"
+        // )}`,
+        url: `https://prod-174.westeurope.logic.azure.com/workflows/c125ae4f1c1544649244717e3a9d4b13/triggers/manual/paths/invoke/ids/${searchParams.get("id")}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wZ4C8E5zfQLWkBOG-7mpjjz2Hnbl7bKt1pTeD9wSglc`,
       },
       transformItems
     );
@@ -110,7 +111,8 @@ const ResultsPage = () => {
       items.length &&
       votingRequest(
         {
-          url: "https://initvoting.azurewebsites.net/api/voting",
+          //url: "https://initvoting.azurewebsites.net/api/voting",
+          url: "https://prod-143.westeurope.logic.azure.com:443/workflows/4135e5fcc18c4bc194c151fe0a523888/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gouXYj9c2loCr6PvP4Mu9lJk_KYKHP1MVOKvqrR0KsY",
           method: "POST",
           headers: {
             "Content-Type": "application/json",

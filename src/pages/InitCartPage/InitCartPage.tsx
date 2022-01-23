@@ -102,7 +102,8 @@ const InitCartPage = () => {
     votingList.length &&
       sendItemsToVote(
         {
-          url: "https://initvoting.azurewebsites.net/api/startvoting",
+          //url: "https://initvoting.azurewebsites.net/api/startvoting",
+          url: "https://prod-238.westeurope.logic.azure.com:443/workflows/cdab7b1e029547e7951e208def8c26c3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Pl0JzU9Dgqfm6nVPqWP2bC80AIjTc-6qLe1X1lP8l4w",
           method: "POST",
           headers: {
             "Content-Type": "application/json",
