@@ -42,9 +42,10 @@ const VotingPage = () => {
     };
     getItemsToVoting(
       {
-        url: `https://initvoting.azurewebsites.net/api/votingresults?id=${searchParams.get(
-          "id"
-        )}`,
+        // url: `https://initvoting.azurewebsites.net/api/votingresults?id=${searchParams.get(
+        //   "id"
+        // )}`,
+        url: `https://prod-234.westeurope.logic.azure.com/workflows/f560025fe2ff4bc5ae61f4a6e73190de/triggers/manual/paths/invoke/ids/${searchParams.get("id")}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0Lr0YNWv6R5oXrAeftrQARa-hBHI8fvXCbh4eucJrKE`,
       },
       transformItems
     );
@@ -59,7 +60,8 @@ const VotingPage = () => {
     };
     getUrlBack(
       {
-        url: "https://initvoting.azurewebsites.net/api/donevoting",
+        // url: "https://initvoting.azurewebsites.net/api/donevoting",
+        url: "https://prod-108.westeurope.logic.azure.com:443/workflows/0b1b994fa3bf4af19bbe843c9e176a3d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lbWTHXvl7yFbWhM8Qu4O128QR2YQItgpVvTTGPu0CUE",
       },
       transformUrl
     );
