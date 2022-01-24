@@ -5,9 +5,7 @@ import BaseItem from "../BaseItem";
 import { HeaderItemInit } from "../style";
 import {
   BodyContainer,
-  Border,
   CommentItem,
-  CommentsContainer,
   Row,
   Square,
   SumOfVotes,
@@ -55,9 +53,6 @@ const ItemVote = (props: ItemProps) => {
             <CommentItem>No Comments</CommentItem> : 
             <CommentItem>{comment}</CommentItem>
           }
-          <CommentsContainer>
-            <Border />
-          </CommentsContainer>
         </BodyContainer>
       </BaseItem.Body>
     </BaseItem>

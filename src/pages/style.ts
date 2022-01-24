@@ -5,7 +5,7 @@ import { COLORS } from "../theme";
 export const Container = styled.div`
   box-shadow: 0px 32px 64px rgba(0, 0, 0, 0.05);
   border: 1px solid ${COLORS.color_light_grey};
-  width: 480px;
+  max-width: 480px;
   height: 100vh;
   margin: 10%;
   margin-left: auto;
@@ -66,7 +66,7 @@ export const Subtitle = styled.div`
 `;
 
 export const Footer = styled.div`
-  height: 20%;
+  height: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;

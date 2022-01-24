@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     flex-direction: row;
-    height: 100px;
-    justify-content: space-around;
+    padding-top: 8px;
+    height: 80px;
+    justify-content: space-between;
 `
 export const Col = styled.div`
     display: flex;

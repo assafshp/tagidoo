@@ -12,20 +12,17 @@ export const CommentsContainer = styled.div`
   font-size: 12px;
   position: relative;
 `;
-export const Border = styled.div`
-  border-left: 2px solid ${COLORS.color_grey};
-  height: 100%;
-  position: absolute;
-  left: 5px;
-`;
 export const CommentItem = styled.div`
   padding-left: 5px;
+  padding-top: 10px;
   width: 200px;
   border-bottom: 1px solid ${COLORS.color_lightblue};
   color: #707070;
+  margin-bottom: 10px;
 `;
 export const Row = styled.div`
   padding-top: 3px;
+  padding-left: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
