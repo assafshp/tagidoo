@@ -4,7 +4,7 @@ import { Message, Wrapper } from "./style";
 
 interface LoaderProps {
   loading: boolean;
-  message: string;
+  message?: string;
   size?: number;
 }
 
@@ -13,7 +13,7 @@ const Loader = (props: LoaderProps) => {
     <Wrapper>
       <ClipLoader
         size={props.size ? props.size : 70}
-        color={COLORS.color_grey}
+        color={COLORS.color_lightblue}
         loading={props.loading}
       />
       <Message>{props.message}</Message>

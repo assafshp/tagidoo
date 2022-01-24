@@ -3,13 +3,11 @@ export type Vote = {
   vote: number;
   comment:string;
 }
-
 export interface ItemType  {
   [`item-id`]: string;
   [`image-url`]: string;
   name: string;
   price: string;
   votes: Vote[]
-  vote?: Number;
-  comment?: string;
+  selected: boolean;
 }

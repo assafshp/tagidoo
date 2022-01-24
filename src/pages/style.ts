@@ -12,16 +12,27 @@ export const Container = styled.div`
   margin-right: auto;
   display: flex;
   flex-direction: column;
-  padding: 15px;
 `;
 export const Body = styled.div`
-  height: 70%;
+  height: 80%;
+  padding: 20px;
+  overflow: scroll;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: ${COLORS.color_lightblue};
+    border-radius: 40px;
+  }
+  ::-webkit-scrollbar-track {
+    padding: 10px;
+  }
 `;
 export const Header = styled.div`
   font-size: 18px;
   line-height: 32px;
   font-weight: bold;
-  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,26 +40,43 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.div`
-  color: ${COLORS.color_pink};
+  color: white;
+  align-self: center;
   font-size: 28px;
-  text-transform: uppercase;
   padding-bottom: 10px;
+  background: linear-gradient(
+    to right,
+    ${COLORS.color_lightblue} 50%,
+    #a7ede5,
+    #45d9d5
+  );
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
 `;
 export const Subtitle = styled.div`
   font-size: 20px;
+  padding-top: 20px;
   padding-bottom: 10px;
+  color: ${COLORS.color_lightblue};
+  font-size: 28px;
+  font-weight: 300;
 `;
 
 export const Footer = styled.div`
   height: 20%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  align-items: flex-end;
 `;
-export const SquareButton = styled.button<Boolean>`
+export const SquareButton = styled.button`
   height: 42px;
   width: 250px;
-  background: ${COLORS.color_grey};
+  background: ${COLORS.color_lightblue};
+  border-radius: 50px;
   cursor: pointer;
   display: flex;
   justify-content: center;

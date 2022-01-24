@@ -1,7 +1,7 @@
-import checkIcon from "../../../assets/icons/check.svg";
+
 import { ButtonProps } from "../../Button/Button";
 import BaseItem from "../BaseItem";
-import { HeaderItemInit, Icon } from "../style";
+import { HeaderItemInit } from "../style";
 import { ButtonItem } from "./style";
 
 export interface ItemProps {
@@ -12,15 +12,13 @@ export interface ItemProps {
 }
 const ItemInit = (props: ItemProps) => {
   return (
-    <BaseItem>
+    <BaseItem> 
+    <ButtonItem {...props.button} />
       <BaseItem.Image {...props} />
       <HeaderItemInit>
         <BaseItem.Title {...props} />
         <BaseItem.Price {...props} />
       </HeaderItemInit>
-      <ButtonItem {...props.button}>
-        <Icon src={checkIcon} />
-      </ButtonItem>
     </BaseItem>
   );
 };

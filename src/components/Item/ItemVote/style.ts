@@ -20,12 +20,16 @@ export const Border = styled.div`
 `;
 export const CommentItem = styled.div`
   padding-left: 5px;
+  width: 200px;
+  border-bottom: 1px solid ${COLORS.color_lightblue};
+  color: #707070;
 `;
 export const Row = styled.div`
   padding-top: 3px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  color: ${COLORS.color_lightblue};
 `;
 export const Square = styled.div`
   width: 10px;
