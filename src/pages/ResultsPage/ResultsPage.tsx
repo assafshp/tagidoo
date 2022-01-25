@@ -109,7 +109,7 @@ const ResultsPage = () => {
 
   const closeModal = () => {
     if (success) {
-      navigate("/votingPage");
+      navigate(`/votingPage?id=${data.id}`);
     }
     !isLoadingSendResults && setShowModal(false);
   };

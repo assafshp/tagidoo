@@ -86,7 +86,7 @@ const InitCartPage = () => {
 
   const closeModal = () => {
     if (success) {
-      navigate("/resultsPage");
+      navigate(`/resultsPage?id=${data.id}`);
     }
     if (!isLoadingSendItems || !data.enabled) setShowModal(false);
   };
@@ -95,11 +95,13 @@ const InitCartPage = () => {
     setShowModal(true);
     !counterOfSelectedItems && setMessage("You need to add items");
     const responseDate = (data: any) => {
-      isErrorSendItems
-        ? setMessage("Try again!")
-        : data.products &&
-          setMessage("Your items are on the way to your friends!");
-      if (data) setSuccess(true);
+      isErrorSendItems && setMessage("Try again!");
+      // if (data) setSuccess(true);
+      if (data) {
+        navigate(`/resultsPage?id=${data.id}`);
+      }
+      // : data.products &&
+      //   setMessage("Your items are on the way to your friends!");
     };
     if (counterOfSelectedItems && data.enabled) {
       sendItemsToVote(
@@ -129,12 +131,14 @@ const InitCartPage = () => {
           Ask your friends
         </BasePage.Button>
       </BasePage.Footer>
-      {!isLoadingSendItems && <Modal
-        message={message}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        closeModal={closeModal}
-      />}
+      {!isLoadingSendItems && !success && (
+        <Modal
+          message={message}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          closeModal={closeModal}
+        />
+      )}
     </BasePage>
   );
 };
