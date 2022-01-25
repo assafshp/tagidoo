@@ -11,6 +11,7 @@ interface ModalProps {
   setShowModal: (value: boolean) => void;
   message: string;
   closeModal: () => void;
+  children?: any;
 }
 
 export const Modal = (props: ModalProps) => {
@@ -37,6 +38,7 @@ export const Modal = (props: ModalProps) => {
         <Background>
           <ModalWrapper>
             <ModalContent>{props.message}</ModalContent>
+            {props.children}
             <CloseModalButton onClick={props.closeModal}>Ok</CloseModalButton>
           </ModalWrapper>
         </Background>
