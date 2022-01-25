@@ -7,9 +7,6 @@ export const Container = styled.div`
   border: 1px solid ${COLORS.color_light_grey};
   height: 100%;
   max-width: 600px;
-  margin: 10%;
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
   flex-direction: column;
 `;
