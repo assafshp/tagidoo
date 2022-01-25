@@ -4,7 +4,7 @@ import useHttp from "../../hooks/useHttp";
 import { useSearchParams } from "react-router-dom";
 import BasePage from "../BasePage";
 import { ItemType } from "../../types";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Modal from "../../components/Modal/Modal";
 import { Message } from "./style";
@@ -16,7 +16,6 @@ const InitCartPage = () => {
   const [success, setSuccess] = useState<Boolean>(false);
   const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
-  const location = useLocation();
   const [searchParams] = useSearchParams();
 
   const {
@@ -91,6 +90,7 @@ const InitCartPage = () => {
     }
     if (!isLoadingSendItems || !data.enabled) setShowModal(false);
   };
+
   const onAskFriends = async () => {
     setShowModal(true);
     !counterOfSelectedItems && setMessage("You need to add items");
@@ -98,7 +98,7 @@ const InitCartPage = () => {
       isErrorSendItems && setMessage("Try again!");
       // if (data) setSuccess(true);
       if (data) {
-        navigate(`/resultsPage?id=${data.id}`, {state: {from: location.pathname}});
+        navigate(`/resultsPage?id=${data.id}`);
       }
       // : data.products &&
       //   setMessage("Your items are on the way to your friends!");
@@ -136,7 +136,8 @@ const InitCartPage = () => {
           message={message}
           showModal={showModal}
           setShowModal={setShowModal}
-          closeModal={closeModal}></Modal>
+          closeModal={closeModal}
+        />
       )}
     </BasePage>
   );

@@ -36,11 +36,11 @@ export const Header = styled.div`
   justify-content: center;
 `;
 
-export const Title = styled.img`
+export const Title = styled.div`
   color: white;
   align-self: center;
   font-size: 28px;
-  padding: 10px 0px;
+  padding-bottom: 10px;
   background: linear-gradient(
     to right,
     ${COLORS.color_lightblue} 50%,
@@ -51,7 +51,7 @@ export const Title = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70px;
+  height: 60px;
 `;
 export const Subtitle = styled.div`
   font-size: 20px;

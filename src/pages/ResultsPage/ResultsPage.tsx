@@ -1,15 +1,15 @@
-import { Children, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ItemResult from "../../components/Item/ItemResult/ItemResult";
 import useHttp from "../../hooks/useHttp";
 import { ItemType } from "../../types";
 import BasePage from "../BasePage";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { InputContainer, Input, InputTitle } from "./style";
 import Loader from "../../components/Loader/Loader";
 import { Modal } from "../../components/Modal/Modal";
 import { Message } from "../InitCartPage/style";
 
-const ResultsPage = (props: any) => {
+const ResultsPage = () => {
   const [data, setData] = useState<any>({});
   const navigate = useNavigate();
   const [voterName, setVoterName] = useState<string>(
@@ -19,20 +19,6 @@ const ResultsPage = (props: any) => {
   const [success, setSuccess] = useState<Boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [searchParams] = useSearchParams();
-  const { state }: any = useLocation();
-console.log(state);
-
-  useEffect(() => {
-    if (state) {
-      if (state.from === "/initCartPage") {
-        setMessage(`Now it's time to share this page with your friends!`);
-        setShowModal(true);
-      }
-    } else {
-      setMessage("Write your name");
-      setShowModal(true);
-    }
-  }, [state]);
 
   useEffect(() => {
     setData(data);
@@ -173,30 +159,23 @@ console.log(state);
       <BasePage.Header>
         <BasePage.Title />
         <BasePage.Subtitle>Rate my shopping bag</BasePage.Subtitle>
+        <InputContainer>
+          <InputTitle>Enter your name</InputTitle>
+          <Input type="text" value={voterName} onChange={voterChangeHandler} />
+        </InputContainer>
       </BasePage.Header>
       <BasePage.Body>{content}</BasePage.Body>
       <BasePage.Footer>
         {isLoadingSendResults && <Loader loading={true} size={30} />}
         <BasePage.Button onClick={onSendVoting}>Send</BasePage.Button>
       </BasePage.Footer>
-      {!isLoadingSendResults && !errorSendResults && !isLoadingItems && (
+      {!isLoadingSendResults && !errorSendResults && (
         <Modal
           message={message}
           showModal={showModal}
           setShowModal={setShowModal}
           closeModal={closeModal}
-        >
-          {!success && !state && (
-            <InputContainer>
-              <InputTitle>Enter your name</InputTitle>
-              <Input
-                type="text"
-                value={voterName}
-                onChange={voterChangeHandler}
-              />
-            </InputContainer>
-          )}
-        </Modal>
+        />
       )}
     </BasePage>
   );

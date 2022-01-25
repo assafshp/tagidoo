@@ -1,4 +1,3 @@
-import logo from "../assets/icons/logo.svg";
 
 import {
   Container,
@@ -22,7 +21,7 @@ BasePage.Header = function BasePageHeader(props: any) {
 };
 
 BasePage.Title = function BasePageTitle() {
-  return <Title src={logo}></Title>;
+  return <Title>Tagidoo</Title>;
 };
 BasePage.Subtitle = function BasePageSubtitle(props: any) {
   return <Subtitle>{props.children}</Subtitle>;
