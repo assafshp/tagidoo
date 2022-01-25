@@ -11,6 +11,7 @@ import { Message } from "../InitCartPage/style";
 
 const ResultsPage = () => {
   const [data, setData] = useState<any>({});
+  const navigate = useNavigate();
   const [voterName, setVoterName] = useState<string>(
     localStorage.getItem("voterName") || ""
   );
@@ -20,7 +21,7 @@ const ResultsPage = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    setData(data)
+    setData(data);
   }, [data]);
 
   const {
@@ -41,7 +42,7 @@ const ResultsPage = () => {
     const objectVote = { voterName: "", vote: value, comment: "" };
     votes.push(objectVote);
 
-    !data.products.votes
+    !data.products[index].votes
       ? (data.products[index].votes = votes)
       : !data.products[index].votes[0]
       ? data.products[index].votes.push(objectVote)
@@ -53,7 +54,7 @@ const ResultsPage = () => {
     const objectVote = { voterName: "", vote: "", comment: comment };
     votes.push(objectVote);
 
-    !data.products.votes
+    !data.products[index].votes
       ? (data.products[index].votes = votes)
       : !data.products[index].votes[0]
       ? data.products[index].votes.push(objectVote)
@@ -108,7 +109,7 @@ const ResultsPage = () => {
 
   const closeModal = () => {
     if (success) {
-      setMessage("Thank for your voting!");
+      navigate("/votingPage");
     }
     !isLoadingSendResults && setShowModal(false);
   };

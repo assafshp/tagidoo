@@ -86,7 +86,7 @@ const InitCartPage = () => {
 
   const closeModal = () => {
     if (success) {
-      setMessage("Your items are on the way to your friends!");
+      navigate("/resultsPage");
     }
     if (!isLoadingSendItems || !data.enabled) setShowModal(false);
   };
