@@ -7,19 +7,26 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { InputContainer, Input, InputTitle } from "./style";
 import Loader from "../../components/Loader/Loader";
 import { Modal } from "../../components/Modal/Modal";
+import { Message } from "../InitCartPage/style";
 
 const ResultsPage = () => {
-  const [items, setItems] = useState<any[]>([]);
-  const [voterName, setVoterName] = useState<string>("");
+  const [data, setData] = useState<any>({});
+  const navigate = useNavigate();
+  const [voterName, setVoterName] = useState<string>(
+    localStorage.getItem("voterName") || ""
+  );
   const [showModal, setShowModal] = useState<boolean>(false);
   const [success, setSuccess] = useState<Boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    setData(data);
+  }, [data]);
 
   const {
     isLoading: isLoadingItems,
-    error: isErrorItems,
+    error: isErrorItemsFromCart,
     sendRequest: getItemsToVoting,
   } = useHttp();
 
@@ -29,78 +36,103 @@ const ResultsPage = () => {
     sendRequest: votingRequest,
   } = useHttp();
 
-  const addVotingValueToItem = (item: ItemType, value: Number) => {
-    const itemFound = items.find((el) => el === item);
-    itemFound.vote = value;
+  const addVotingValueToItem = (item: ItemType, value: string) => {
+    const index = data.products.indexOf(item);
+    const votes = [];
+    const objectVote = { voterName: "", vote: value, comment: "" };
+    votes.push(objectVote);
+
+    !data.products[index].votes
+      ? (data.products[index].votes = votes)
+      : !data.products[index].votes[0]
+      ? data.products[index].votes.push(objectVote)
+      : (data.products[index].votes[0].vote = value);
   };
   const addCommentToItem = (item: ItemType, comment: string) => {
-    const itemFound = items.find((el) => el === item);
-    itemFound.comment = comment;
+    const index = data.products.indexOf(item);
+    const votes = [];
+    const objectVote = { voterName: "", vote: "", comment: comment };
+    votes.push(objectVote);
+
+    !data.products[index].votes
+      ? (data.products[index].votes = votes)
+      : !data.products[index].votes[0]
+      ? data.products[index].votes.push(objectVote)
+      : (data.products[index].votes[0].comment = comment);
   };
 
-  const valueChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const voterChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setVoterName(e.currentTarget.value);
   };
 
-  const content = isErrorItems ? (
-    "Request failed!"
+  const content = isErrorItemsFromCart ? (
+    <Message>Request failed!</Message>
   ) : isLoadingItems ? (
-    <Loader loading={true} message={"Loading items..."} />
-  ) : !items ? (
-    "No items found!"
+    <Loader loading={true} message={"Loading page..."} />
+  ) : !data.products ? (
+    <Message>No items found!</Message>
   ) : (
-    items.map((item: ItemType) => {
+    data.products.map((item: ItemType) => {
       return (
-        <ItemResult
-          key={item["item-id"]}
-          image={item["image-url"]}
-          title={item.name}
-          price={item.price}
-          onAddVotingValue={(value: number) =>
-            addVotingValueToItem(item, value)
-          }
-          onAddComment={(comment: string) => addCommentToItem(item, comment)}
-        />
+        item.selected && (
+          <ItemResult
+            key={item["item-id"]}
+            image={item["image-url"]}
+            title={item.name}
+            price={item.price}
+            onAddVotingValue={(value: string) =>
+              addVotingValueToItem(item, value)
+            }
+            onAddComment={(comment: string) => addCommentToItem(item, comment)}
+          />
+        )
       );
     })
   );
 
   useEffect(() => {
     const transformItems = (data: any) => {
-      data.products.forEach((item: ItemType) => {
-        item.comment = "";
-        item.vote = 0;
-      });
-      setItems(data.products);
+      setData(data);
     };
     getItemsToVoting(
       {
-        // url: `https://initvoting.azurewebsites.net/api/initvoting?id=${searchParams.get(
-        //   "id"
-        // )}`,
-        url: `https://prod-174.westeurope.logic.azure.com/workflows/c125ae4f1c1544649244717e3a9d4b13/triggers/manual/paths/invoke/ids/${searchParams.get("id")}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wZ4C8E5zfQLWkBOG-7mpjjz2Hnbl7bKt1pTeD9wSglc`,
+        url: `https://prod-174.westeurope.logic.azure.com/workflows/c125ae4f1c1544649244717e3a9d4b13/triggers/manual/paths/invoke/ids/${searchParams.get(
+          "id"
+        )}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wZ4C8E5zfQLWkBOG-7mpjjz2Hnbl7bKt1pTeD9wSglc`,
       },
       transformItems
     );
     return () => {
-      setItems([]);
+      setData({});
     };
   }, [getItemsToVoting, searchParams]);
 
   const closeModal = () => {
     if (success) {
-      navigate("/votingPage");
+      navigate(`/votingPage?id=${data.id}`);
     }
     !isLoadingSendResults && setShowModal(false);
   };
 
   const onSendVoting = async () => {
     setShowModal(true);
-    !voterName
-      ? setMessage("You must enter name")
-      : items
-      ? setMessage("Loading...")
-      : setMessage("There are no items");
+    if (!voterName) {
+      setMessage("You must enter name");
+    } else {
+      localStorage.setItem("voterName", voterName);
+      data.products.forEach((product: any) => {
+        if (product.selected) {
+          const votes = [];
+          const objectVote = { voterName: "", vote: "", comment: "" };
+          votes.push(objectVote);
+          !product.votes
+            ? (product.votes = votes)
+            : !product.votes[0]
+            ? product.votes.push(objectVote)
+            : (product.votes[0].voterName = voterName);
+        }
+      });
+    }
     const responseDate = (data: any) => {
       errorSendResults
         ? setMessage("Try again!")
@@ -108,16 +140,15 @@ const ResultsPage = () => {
       if (data) setSuccess(true);
     };
     voterName &&
-      items.length &&
+      data.products.length &&
       votingRequest(
         {
-          //url: "https://initvoting.azurewebsites.net/api/voting",
           url: "https://prod-143.westeurope.logic.azure.com:443/workflows/4135e5fcc18c4bc194c151fe0a523888/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gouXYj9c2loCr6PvP4Mu9lJk_KYKHP1MVOKvqrR0KsY",
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: { products: items, voterName },
+          body: data,
         },
         responseDate
       );
@@ -130,19 +161,22 @@ const ResultsPage = () => {
         <BasePage.Subtitle>Rate my shopping bag</BasePage.Subtitle>
         <InputContainer>
           <InputTitle>Enter your name</InputTitle>
-          <Input type="text" value={voterName} onChange={valueChangeHandler} />
+          <Input type="text" value={voterName} onChange={voterChangeHandler} />
         </InputContainer>
       </BasePage.Header>
       <BasePage.Body>{content}</BasePage.Body>
       <BasePage.Footer>
-        <BasePage.Button onClick={onSendVoting}>Done!</BasePage.Button>
+        {isLoadingSendResults && <Loader loading={true} size={30} />}
+        <BasePage.Button onClick={onSendVoting}>Send</BasePage.Button>
+      </BasePage.Footer>
+      {!isLoadingSendResults && !errorSendResults && (
         <Modal
           message={message}
           showModal={showModal}
           setShowModal={setShowModal}
           closeModal={closeModal}
         />
-      </BasePage.Footer>
+      )}
     </BasePage>
   );
 };

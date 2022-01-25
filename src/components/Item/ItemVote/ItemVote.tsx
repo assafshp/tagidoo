@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Vote } from "../../../types";
+import Smiles from "../../Smile/Smiles";
 import BaseItem from "../BaseItem";
-import { HeaderItemResult } from "../ItemResult/style";
+import { HeaderItemInit } from "../style";
 import {
   BodyContainer,
-  Border,
   CommentItem,
-  CommentsContainer,
   Row,
   Square,
   SumOfVotes,
@@ -22,12 +21,15 @@ export interface ItemProps {
 const ItemVote = (props: ItemProps) => {
   const [sumOfVotes, setSumOfVotes] = useState<number>(0);
   const [sumOfComments, setSumOfComments] = useState<number>(0);
+  const [comment, setComment] = useState("");
+
   useEffect(() => {
     let sumVotes = 0,
       sumComments = 0;
-    props.votes.forEach((voteItem) => {
-      sumVotes += voteItem.vote;
+    props.votes && props.votes.forEach((voteItem) => {
+      voteItem.vote && sumVotes++;
       voteItem.comment && sumComments++;
+      if(voteItem.comment && !comment) setComment(voteItem.comment)
     });
     setSumOfVotes(sumVotes);
     setSumOfComments(sumComments);
@@ -37,24 +39,20 @@ const ItemVote = (props: ItemProps) => {
     <BaseItem>
       <BaseItem.Image {...props} />
       <BaseItem.Body>
-        <HeaderItemResult>
+        <HeaderItemInit>
           <BaseItem.Title {...props} />
           <BaseItem.Price {...props} />
-        </HeaderItemResult>
+        </HeaderItemInit>
         <BodyContainer>
-          <SumOfVotes>{sumOfVotes} votes</SumOfVotes>
-          {sumOfComments && <span>, {sumOfComments} comments</span>}
-          <CommentsContainer>
-            <Border />
-            {props.votes.map((itemVote, index) => {
-              return (
-                <Row key={index}>
-                  <Square />
-                  <CommentItem>{itemVote.comment}</CommentItem>
-                </Row>
-              );
-            })}
-          </CommentsContainer>
+          <Smiles/>
+          <Row>
+            <SumOfVotes>{sumOfVotes} votes</SumOfVotes>
+            {sumOfComments > 0 && <span>, {sumOfComments} comments</span>}
+          </Row>
+          {sumOfComments === 0 ?
+            <CommentItem>No Comments</CommentItem> : 
+            <CommentItem>{comment}</CommentItem>
+          }
         </BodyContainer>
       </BaseItem.Body>
     </BaseItem>

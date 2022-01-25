@@ -1,20 +1,24 @@
 import { useState } from "react";
+import checkIcon from "../../assets/icons/Checkbox.svg";
 import "./style";
-import { ButtonStyled } from "./style";
+import { ButtonStyled, Icon } from "./style";
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
-  addOrRemove: () => void
+  addOrRemove: () => void;
 }
 
 const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const [touched, setTouched] = useState<Boolean>(false);
   const changeColor = () => {
-    setTouched(!touched); 
+    setTouched(!touched);
     props.addOrRemove();
   };
 
   return (
-    <ButtonStyled style={{backgroundColor:`${touched ? '#66CDAA' : 'grey'}`}} onClick={changeColor} {...props}>
-      {props.children}
+    <ButtonStyled
+      onClick={changeColor}
+      {...props}
+    >
+      {touched && <Icon src={checkIcon} />}
     </ButtonStyled>
   );
 };

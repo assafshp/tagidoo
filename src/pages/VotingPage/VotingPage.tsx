@@ -5,10 +5,12 @@ import useHttp from "../../hooks/useHttp";
 import { ItemType } from "../../types";
 import BasePage from "../BasePage";
 import { useSearchParams } from "react-router-dom";
+import { Message } from "../InitCartPage/style";
 
 const VotingPage = () => {
-  const [items, setItems] = useState<ItemType[]>([]);
+  const [data, setData] = useState<any>({});
   const [searchParams] = useSearchParams();
+
   const {
     isLoading: isLoadingItems,
     error: isErrorItems,
@@ -17,51 +19,58 @@ const VotingPage = () => {
   const { sendRequest: getUrlBack } = useHttp();
 
   const content = isErrorItems ? (
-    "Request failed!"
+    <Message>Request failed!</Message>
   ) : isLoadingItems ? (
-    <Loader loading={true} message={"Loading your results..."} />
-  ) : !items ? (
-    "No items found!"
+    <Loader loading={true} message={"Loading page..."} />
+  ) : !data.products ? (
+    <Message>No items found!</Message>
   ) : (
-    items.map((item: ItemType) => {
+    data.products.map((item: ItemType) => {
       return (
-        <ItemVote
-          key={item["item-id"]}
-          image={item["image-url"]}
-          title={item.name}
-          price={item.price}
-          votes={item.votes}
-        />
+        item.selected && (
+          <ItemVote
+            key={item["item-id"]}
+            image={item["image-url"]}
+            title={item.name}
+            price={item.price}
+            votes={item.votes}
+          />
+        )
       );
     })
   );
 
   useEffect(() => {
     const transformItems = (data: any) => {
-      setItems(data.products);
+      setData(data);
     };
     getItemsToVoting(
       {
-        // url: `https://initvoting.azurewebsites.net/api/votingresults?id=${searchParams.get(
-        //   "id"
-        // )}`,
-        url: `https://prod-234.westeurope.logic.azure.com/workflows/f560025fe2ff4bc5ae61f4a6e73190de/triggers/manual/paths/invoke/ids/${searchParams.get("id")}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0Lr0YNWv6R5oXrAeftrQARa-hBHI8fvXCbh4eucJrKE`,
+        url: `https://prod-234.westeurope.logic.azure.com/workflows/f560025fe2ff4bc5ae61f4a6e73190de/triggers/manual/paths/invoke/ids/${searchParams.get(
+          "id"
+        )}
+      ?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0Lr0YNWv6R5oXrAeftrQARa-hBHI8fvXCbh4eucJrKE`,
       },
       transformItems
     );
     return () => {
-      setItems([]);
+      setData({});
     };
   }, [getItemsToVoting, searchParams]);
 
   const onDoneVoting = async () => {
+    data.enabled = false;
     const transformUrl = (data: any) => {
       data && window.open(data[`return-url`], "_blank");
     };
     getUrlBack(
       {
-        // url: "https://initvoting.azurewebsites.net/api/donevoting",
         url: "https://prod-108.westeurope.logic.azure.com:443/workflows/0b1b994fa3bf4af19bbe843c9e176a3d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lbWTHXvl7yFbWhM8Qu4O128QR2YQItgpVvTTGPu0CUE",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: { id: data.id },
       },
       transformUrl
     );

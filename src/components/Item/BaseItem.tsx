@@ -5,7 +5,7 @@ const BaseItem = (props: any) => {
 };
 BaseItem.Body = function BaseItemBody(props: any) {
   return <Body>{props.children}</Body>;
-}; 
+};
 BaseItem.Title = function BaseItemTitle(props: any) {
   return <Title>{props.title}</Title>;
 };

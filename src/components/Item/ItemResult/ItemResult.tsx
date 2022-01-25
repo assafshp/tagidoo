@@ -1,79 +1,57 @@
 import BaseItem from "../BaseItem";
 import cartIcon from "../../../assets/icons/cart.svg";
-import pencilIcon from "../../../assets/icons/pencil.svg";
-import minusIcon from "../../../assets/icons/minus.svg";
-import plusIcon from "../../../assets/icons/plus.svg";
 import {
-  HeaderItemResult,
   Icon,
   AddComment,
   Voting,
   InputValue,
   InputContainer,
+  Input,
 } from "./style";
-import { IconButton } from "../style";
+import { HeaderItemInit, IconButton } from "../style";
 import { useState } from "react";
-import { Input } from "../../../pages/ResultsPage/style";
-
+import { Row } from "../ItemVote/style";
+import Smiles from "../../Smile/Smiles";
 
 export interface ItemProps {
   image: string;
   title: string;
   price: string;
-  onAddVotingValue: (value: number) => void;
+  onAddVotingValue: (value: string) => void;
   onAddComment: (comment: string) => void;
 }
 const ItemResult = (props: ItemProps) => {
   const [commentValue, setCommentValue] = useState<string>("");
-  const [votingValue, setVotingValue] = useState<number>(0);
+  const [votingValue, setVotingValue] = useState<string>("");
 
-  const valueChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  const commentChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setCommentValue(e.currentTarget.value);
     props.onAddComment(e.currentTarget.value);
   };
-  const onPlusVoting = () => {
-    if (votingValue < 10) {
-      setVotingValue(votingValue + 1);
-      props.onAddVotingValue(votingValue + 1);
-    }
-  };
-  const onMinusVoting = () => {
-    if (votingValue > 0) {
-      setVotingValue(votingValue - 1);
-      props.onAddVotingValue(votingValue - 1);
-    }
+  const voteChangeHandler = (value: string) => {
+    setVotingValue(value);
+    props.onAddVotingValue(value);
   };
   return (
     <BaseItem>
       <BaseItem.Image {...props} />
       <BaseItem.Body>
-        <HeaderItemResult>
-          <BaseItem.Title {...props} />
-          <BaseItem.Price {...props} />
+        <Row>
+          <HeaderItemInit>
+            <BaseItem.Title {...props} />
+            <BaseItem.Price {...props} />
+          </HeaderItemInit>
           <Icon src={cartIcon} />
-        </HeaderItemResult>
-        <Voting>
-          <IconButton onClick={onMinusVoting} src={minusIcon} />
-          <InputValue
-            type="number"
-            value={votingValue}
-            readOnly
-            min="0"
-            max="10"
-          />
-          <IconButton onClick={onPlusVoting} src={plusIcon} />
-        </Voting>
-        <AddComment>
-          <p>Add a comment</p>
-          <InputContainer>
-            <Input
-              type="text"
-              value={commentValue}
-              onChange={valueChangeHandler}
-            ></Input>
-            <Icon src={pencilIcon} />
-          </InputContainer>
-        </AddComment>
+        </Row>
+        <Smiles onVote={voteChangeHandler} />
+        <InputContainer>
+          <Input
+            placeholder="Add a comment"
+            type="text"
+            value={commentValue}
+            onChange={commentChangeHandler}
+          ></Input>
+        </InputContainer>
       </BaseItem.Body>
     </BaseItem>
   );
