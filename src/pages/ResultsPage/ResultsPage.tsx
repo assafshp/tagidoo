@@ -20,7 +20,6 @@ const ResultsPage = (props: any) => {
   const [message, setMessage] = useState<string>("");
   const [searchParams] = useSearchParams();
   const { state }: any = useLocation();
-console.log(state);
 
   useEffect(() => {
     if (state) {
