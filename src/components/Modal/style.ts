@@ -20,17 +20,18 @@ export const ModalWrapper = styled.div`
   position: relative;
   z-index: 10;
   border-radius: 10px;
-  justify-content: center;
+  justify-content: space-around;
   text-align: center;
   align-items: center;
   background-color: ${COLORS.color_lightblue};
   color: white;
+  padding: 10px;
 `;
 
 export const ModalContent = styled.div``;
 export const CloseModalButton = styled.button`
   cursor: pointer;
-  background-color: #45D9D5;
+  background-color: #45d9d5;
   border: none;
   border-radius: 20px;
   width: 50px;
