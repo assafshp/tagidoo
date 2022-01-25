@@ -5,8 +5,8 @@ import { COLORS } from "../theme";
 export const Container = styled.div`
   box-shadow: 0px 32px 64px rgba(0, 0, 0, 0.05);
   border: 1px solid ${COLORS.color_light_grey};
-  max-width: 480px;
-  height: 100vh;
+  height: 100%;
+  max-width: 600px;
   margin: 10%;
   margin-left: auto;
   margin-right: auto;
@@ -14,7 +14,7 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 export const Body = styled.div`
-  height: 80%;
+  height: 70%;
   padding: 20px;
   overflow: scroll;
 
@@ -66,11 +66,12 @@ export const Subtitle = styled.div`
 `;
 
 export const Footer = styled.div`
-  height: 30%;
+  height: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 30px;
 `;
 export const SquareButton = styled.button`
   height: 42px;

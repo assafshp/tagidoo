@@ -3,24 +3,22 @@ import { COLORS } from "../../theme";
 
 export const Container = styled.div`
   background: white;
-  border-bottom: 1px solid #4BA6F8;
+  border-bottom: 1px solid #4ba6f8;
   display: flex;
   flex-direction: row;
   margin-top: 10px;
   margin-bottom: 10px;
 `;
 export const Body = styled.div`
-  width: 100%;
+  width: 70%;
   height: 90%;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 export const ImageItem = styled.img`
-  max-width: 100%;
   height: 90%;
-  width: 130px;
+  width: 30%;
   padding-left: 10px;
   object-fit: cover;
 `;

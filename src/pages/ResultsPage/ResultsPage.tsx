@@ -17,8 +17,11 @@ const ResultsPage = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [success, setSuccess] = useState<Boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    setData(data)
+  }, [data]);
 
   const {
     isLoading: isLoadingItems,
@@ -35,8 +38,9 @@ const ResultsPage = () => {
   const addVotingValueToItem = (item: ItemType, value: string) => {
     const index = data.products.indexOf(item);
     const votes = [];
-    const objectVote = { vote: value, comment: "", voterName: "" };
+    const objectVote = { voterName: "", vote: value, comment: "" };
     votes.push(objectVote);
+
     !data.products.votes
       ? (data.products[index].votes = votes)
       : !data.products[index].votes[0]
@@ -46,13 +50,14 @@ const ResultsPage = () => {
   const addCommentToItem = (item: ItemType, comment: string) => {
     const index = data.products.indexOf(item);
     const votes = [];
-    const objectVote = { vote: "", comment: comment, voterName: "" };
+    const objectVote = { voterName: "", vote: "", comment: comment };
     votes.push(objectVote);
+
     !data.products.votes
       ? (data.products[index].votes = votes)
       : !data.products[index].votes[0]
       ? data.products[index].votes.push(objectVote)
-      : (data.products[index].votes[0].vote = comment);
+      : (data.products[index].votes[0].comment = comment);
   };
 
   const voterChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
@@ -115,14 +120,16 @@ const ResultsPage = () => {
     } else {
       localStorage.setItem("voterName", voterName);
       data.products.forEach((product: any) => {
-        const votes = [];
-        const objectVote = { vote: "", comment: "", voterName: voterName };
-        votes.push(objectVote);
-        !product.votes
-          ? (product.votes = votes)
-          : !product.votes[0]
-          ? product.votes.push(objectVote)
-          : (product.votes[0].voterName = voterName);
+        if (product.selected) {
+          const votes = [];
+          const objectVote = { voterName: "", vote: "", comment: "" };
+          votes.push(objectVote);
+          !product.votes
+            ? (product.votes = votes)
+            : !product.votes[0]
+            ? product.votes.push(objectVote)
+            : (product.votes[0].voterName = voterName);
+        }
       });
     }
     const responseDate = (data: any) => {
