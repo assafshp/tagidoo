@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { COLORS } from "../../../theme";
 
 export const BodyContainer = styled.div`
-  font-size: 14px;
   height: 50%;
 `;
 export const Image = styled.img`
@@ -20,6 +19,7 @@ export const ImageTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 14px;
 `;
 export const ImageContainer = styled.div`
   position: relative;
@@ -28,7 +28,9 @@ export const ImageContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
-export const SumOfVotes = styled.span``;
+export const SumOfVotes = styled.span`
+  font-size: 14px;
+`;
 export const CommentsContainer = styled.div`
   margin-top: 5px;
   height: 80%;
@@ -37,21 +39,23 @@ export const CommentsContainer = styled.div`
 `;
 export const ButtonDropdown = styled.img`
   cursor: pointer;
-  height: 35px;
+  height: 30px;
   filter: sepia(100%) hue-rotate(190deg) saturate(500%);
   position: absolute;
   bottom: 0;
   right: 0;
 `;
 export const CommentItem = styled.div`
-  width: 200px;
+  width: 160px;
   border-bottom: 1px solid ${COLORS.color_lightblue};
   color: #707070;
   margin-bottom: 10px;
+  font-size: 14px;
 `;
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   color: ${COLORS.color_lightblue};
+  font-size: 14px;
 `;

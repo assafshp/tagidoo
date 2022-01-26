@@ -63,28 +63,25 @@ const ItemVote = (props: ItemProps) => {
           {smiles.find(({ value }) => value === avrerageVotes)?.name}
         </ImageTitle>
       </ImageContainer>
-
       <BaseItem.Body>
         <HeaderItemInit>
           <BaseItem.Title {...props} />
           <BaseItem.Price {...props} />
         </HeaderItemInit>
-        <BodyContainer>
-          <SmilesResults result={avrerageVotes} />
-          <Row>
-            <SumOfVotes>{sumOfVotes} votes</SumOfVotes>
-            {sumOfComments > 0 && <span>, {sumOfComments} comments</span>}
-          </Row>
-          {sumOfComments === 0 ? (
-            <CommentItem>No Comments</CommentItem>
-          ) : (
-            <CommentItem>{comment}</CommentItem>
-          )}
-          <ButtonDropdown
-            src={dropdownIcon}
-            onClick={() => setShowDropdown(!showDropdown)}
-          ></ButtonDropdown>
-        </BodyContainer>
+        <SmilesResults result={avrerageVotes} />
+        <Row>
+          <SumOfVotes>{sumOfVotes} votes</SumOfVotes>
+          {sumOfComments > 0 && <span>, {sumOfComments} comments</span>}
+        </Row>
+        {sumOfComments === 0 ? (
+          <CommentItem>No Comments</CommentItem>
+        ) : (
+          <CommentItem>{comment}</CommentItem>
+        )}
+        <ButtonDropdown
+          src={dropdownIcon}
+          onClick={() => setShowDropdown(!showDropdown)}
+        ></ButtonDropdown>
         {showDropdown && <Dropdown votes={props.votes} />}
       </BaseItem.Body>
     </BaseItem>

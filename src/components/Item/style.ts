@@ -10,10 +10,12 @@ export const Container = styled.div`
   align-items: center;
   padding-bottom: 15px;
   position: relative;
+  justify-content: space-around;
 `;
 export const Body = styled.div`
   height: 90%;
-  padding-left:20px;
+  width: 100%;
+  padding-left: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,9 +26,9 @@ export const ImageItem = styled.img`
 `;
 export const HeaderItemInit = styled.div`
   width: 90%;
-  height:100%;
-  display: flex;  
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   font-size: 14px;
 `;
 export const Title = styled.div`

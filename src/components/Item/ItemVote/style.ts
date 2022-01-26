@@ -26,4 +26,5 @@ export const InputValue = styled.input`
 `;
 export const InputContainer = styled.div`
   padding-bottom: 15px;
+  height: 30%;
 `;

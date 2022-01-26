@@ -4,6 +4,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-top: 10px;
+  height: 40%;
 `;
 export const Col = styled.div`
   display: flex;
