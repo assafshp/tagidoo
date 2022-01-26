@@ -71,7 +71,6 @@ export const Footer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 30px;
 `;
 export const SquareButton = styled.button`
   height: 42px;

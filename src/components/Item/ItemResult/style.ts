@@ -54,5 +54,4 @@ export const Row = styled.div`
   flex-direction: row;
   align-items: center;
   color: ${COLORS.color_lightblue};
-  height: 35%;
 `;

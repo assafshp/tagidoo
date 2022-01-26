@@ -27,6 +27,7 @@ export const HeaderItemInit = styled.div`
   height:100%;
   display: flex;  
   flex-direction: column;
+  font-size: 14px;
 `;
 export const Title = styled.div`
   color: ${COLORS.color_grey};

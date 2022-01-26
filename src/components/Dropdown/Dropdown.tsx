@@ -28,10 +28,10 @@ const Dropdown = (props: any) => {
         })}
       </VotesContainer>
       <CommentsContainer>
-        {props.votes.map((el: any) => {
+        {props.votes.map((el: any,i:number) => {
           return (
             el.vote && (
-              <VoteRow>
+              <VoteRow key={i}>
                 <SmallIcon
                   src={icons.find(({ name }) => name === el.vote)?.src}
                 ></SmallIcon>
