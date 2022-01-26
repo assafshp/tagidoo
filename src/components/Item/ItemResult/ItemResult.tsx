@@ -4,7 +4,7 @@ import Dropdown from "../../Dropdown/Dropdown";
 import SmilesResults from "../../Smile/SmilesResult";
 import BaseItem from "../BaseItem";
 import dropdownIcon from "../../../assets/icons/downIcon.svg";
-import { HeaderItemInit } from "../style";
+import { HeaderItem } from "../style";
 import {
   BodyContainer,
   CommentItem,
@@ -64,10 +64,10 @@ const ItemVote = (props: ItemProps) => {
         </ImageTitle>
       </ImageContainer>
       <BaseItem.Body>
-        <HeaderItemInit>
+        <HeaderItem>
           <BaseItem.Title {...props} />
           <BaseItem.Price {...props} />
-        </HeaderItemInit>
+        </HeaderItem>
         <SmilesResults result={avrerageVotes} />
         <Row>
           <SumOfVotes>{sumOfVotes} votes</SumOfVotes>

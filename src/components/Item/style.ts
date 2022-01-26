@@ -24,7 +24,7 @@ export const ImageItem = styled.img`
   height: 90%;
   object-fit: cover;
 `;
-export const HeaderItemInit = styled.div`
+export const HeaderItem = styled.div`
   width: 90%;
   display: flex;
   flex-direction: column;

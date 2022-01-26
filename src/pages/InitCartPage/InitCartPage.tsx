@@ -133,9 +133,9 @@ const InitCartPage = () => {
       </BasePage.Header>
       <BasePage.Body>{content}</BasePage.Body>
       <BasePage.Footer>
-        {isLoadingSendItems && <Loader loading={true} size={30} />}
+        {/* {isLoadingSendItems && <Loader loading={true} size={30} />} */}
         <BasePage.Button onClick={onAskFriends}>
-          Ask your friends
+          Continue
         </BasePage.Button>
       </BasePage.Footer>
       {!isLoadingSendItems && !success && (

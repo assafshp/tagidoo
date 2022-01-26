@@ -1,7 +1,7 @@
 import { ButtonProps } from "../../Button/Button";
 import BaseItem from "../BaseItem";
-import { HeaderItemInit } from "../style";
-import { ButtonItem } from "./style";
+import { HeaderItem } from "../style";
+import { ButtonItem, BodyInitItem } from "./style";
 
 export interface ItemProps {
   image: string;
@@ -14,12 +14,12 @@ const ItemInit = (props: ItemProps) => {
     <BaseItem>
       <ButtonItem {...props.button} />
       <BaseItem.Image {...props} />
-      <BaseItem.Body>
-        <HeaderItemInit>
+      <BodyInitItem>
+        <HeaderItem>
           <BaseItem.Title {...props} />
           <BaseItem.Price {...props} />
-        </HeaderItemInit>
-      </BaseItem.Body>
+        </HeaderItem>
+      </BodyInitItem>
     </BaseItem>
   );
 };

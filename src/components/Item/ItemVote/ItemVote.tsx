@@ -5,7 +5,7 @@ import {
   InputContainer,
   Input,
 } from "./style";
-import { HeaderItemInit } from "../style";
+import { HeaderItem } from "../style";
 import { useState } from "react";
 import { Row } from "../ItemResult/style";
 import SmilesVote from "../../Smile/SmilesVote";
@@ -34,10 +34,10 @@ const ItemResult = (props: ItemProps) => {
       <BaseItem.Image {...props} />
       <BaseItem.Body>
         <Row>
-          <HeaderItemInit>
+          <HeaderItem>
             <BaseItem.Title {...props} />
             <BaseItem.Price {...props} />
-          </HeaderItemInit>
+          </HeaderItem>
           <Icon src={cartIcon} />
         </Row>
         <SmilesVote onVote={voteChangeHandler} />

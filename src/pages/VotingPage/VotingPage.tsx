@@ -10,6 +10,7 @@ import {
   InputContainer,
   InputMessage,
   InputTitle,
+  Link,
 } from "./style";
 import Loader from "../../components/Loader/Loader";
 import { Modal } from "../../components/Modal/Modal";
@@ -18,7 +19,6 @@ import iconStore from "../../assets/icons/iconStore.svg";
 
 const VotingPage = (props: any) => {
   const [data, setData] = useState<any>({});
-  const navigate = useNavigate();
   const [voterName, setVoterName] = useState<string>(
     localStorage.getItem("voterName") || ""
   );
@@ -29,15 +29,10 @@ const VotingPage = (props: any) => {
   const { state }: any = useLocation();
 
   useEffect(() => {
-    if (state) {
-      if (state.from === "/initCartPage") {
-        setMessage(`Now it's time to share this page with your friends!`);
-        setShowModal(true);
-      }
-    } else {
-      setMessage("");
-      setShowModal(true);
-    }
+    state &&
+      state.from === "/initCartPage" &&
+      setMessage(`Now it's time to share this page with your friends!`);
+    setShowModal(true);
   }, [state]);
 
   const {
@@ -122,12 +117,17 @@ const VotingPage = (props: any) => {
       setData({});
     };
   }, [getItemsToVoting, searchParams]);
+  let openedWindow: any;
 
+  function openWindow() {
+    openedWindow = window.open('moreinfo.htm');
+  }
   const closeModal = () => {
-    if (success) {
-      navigate(`/resultsPage?id=${data.id}`);
-    }
-    !isLoadingSendResults && setShowModal(false);
+    // if (success) {
+    //   navigate(`/resultsPage?id=${data.id}`);
+    // }
+    // success && openedWindow.close();
+    setShowModal(false);
   };
 
   const onSendVoting = async () => {
@@ -135,6 +135,7 @@ const VotingPage = (props: any) => {
     if (!voterName) {
       setMessage("You must enter name");
     } else {
+      setMessage("");
       localStorage.setItem("voterName", voterName);
       data.products.forEach((product: any) => {
         if (product.selected) {
@@ -150,10 +151,8 @@ const VotingPage = (props: any) => {
       });
     }
     const responseDate = (data: any) => {
-      errorSendResults
-        ? setMessage("Try again!")
-        : data.products && setMessage("Thank for your voting!");
-      if (data) setSuccess(true);
+      errorSendResults ? setMessage("Try again!") : setMessage("");
+      data && setSuccess(true);
     };
     voterName &&
       data.products.length &&
@@ -188,7 +187,7 @@ const VotingPage = (props: any) => {
           setShowModal={setShowModal}
           closeModal={closeModal}
         >
-          {!success && !state && (
+          {!success && !state ? (
             <InputContainer>
               <HeaderContainer>
                 <IconMessage src={iconStore}></IconMessage>
@@ -201,6 +200,18 @@ const VotingPage = (props: any) => {
                 onChange={voterChangeHandler}
               ></InputMessage>
             </InputContainer>
+          ) : (
+            success && (
+              <div>
+                <HeaderContainer>
+                  <IconMessage src={iconStore}></IconMessage>
+                  <InputTitle>Be friendly</InputTitle>
+                </HeaderContainer>
+                <p>Thank you for your friendly feedback!</p>
+                  <p style={{display: 'contents'}}>To download tagidoo click </p>
+                  <Link href={"https://www.tagidoo.com"}>here</Link>
+              </div>
+            )
           )}
         </Modal>
       )}

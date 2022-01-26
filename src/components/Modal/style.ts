@@ -13,7 +13,7 @@ export const Background = styled.div`
 
 export const ModalWrapper = styled.div`
   width: 50%;
-  height: 30%;
+  height: 40%;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
   display: flex;

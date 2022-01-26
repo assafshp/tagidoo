@@ -13,6 +13,9 @@ export const InputTitle = styled.div`
   font-size: 25px;
   font-weight: 500;
 `;
+export const Link = styled.a`
+  color:white;
+`
 export const IconMessage = styled.img``;
 export const InputMessage = styled.input`
   outline: 0;
