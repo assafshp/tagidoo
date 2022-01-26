@@ -3,18 +3,19 @@ import notsureSmile from "../../assets/icons/notsure-smile.svg";
 import niceSmile from "../../assets/icons/nice-smile.svg";
 import maybeSmile from "../../assets/icons/maybe-smile.svg";
 import loveSmile from "../../assets/icons/love-smile.svg";
-import { Icon, Col, Container } from "./style";
+import { Container } from "./style";
 import { useState } from "react";
-import SmileIcon from "./SmileIcon";
+import IconVote from "./IconVote";
 
-const icons = [
-  { name: "No!", src: noSmile },
-  { name: "Not sure", src: notsureSmile },
-  { name: "Maybe", src: maybeSmile },
-  { name: "Nice!", src: niceSmile },
-  { name: "Love it!", src: loveSmile },
+export const icons= [
+  { name: "No!", src: noSmile, value: 1 },
+  { name: "Not sure", src: notsureSmile, value: 2 },
+  { name: "Maybe", src: maybeSmile, value: 3 },
+  { name: "Nice!", src: niceSmile, value: 4 },
+  { name: "Love it!", src: loveSmile, value: 5 },
 ];
-const Smiles = (props: any) => {
+const SmilesVote = (props: any) => {
+  const [touched, setTouched] = useState([false, false, false, false, false]);
   const onVote = (value: string) => {
     props.onVote(value);
   };
@@ -22,16 +23,18 @@ const Smiles = (props: any) => {
     <Container>
       {icons.map((icon: any, i) => {
         return (
-          <SmileIcon
-            filter={props.result ? props.result : false}
+          <IconVote
             key={i}
+            index={i}
             src={icon.src}
             name={icon.name}
             onClick={(value: string) => onVote(value)}
+            touched={touched}
+            setTouched={setTouched}
           />
         );
       })}
     </Container>
   );
 };
-export default Smiles;
+export default SmilesVote;

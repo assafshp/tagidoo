@@ -57,6 +57,9 @@ export const Subtitle = styled.div`
   font-size: 20px;
   padding-top: 20px;
   padding-bottom: 10px;
+  width: 100%;
+  text-align: center;
+  background-color: #FAF8F8;
   color: ${COLORS.color_lightblue};
   font-size: 28px;
   font-weight: 300;

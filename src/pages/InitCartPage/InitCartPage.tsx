@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Modal from "../../components/Modal/Modal";
 import { Message } from "./style";
+import SplashScreen from "../SplashScreen/SplashScreen";
 
 const InitCartPage = () => {
   let counterOfSelectedItems = 0;
@@ -15,6 +16,7 @@ const InitCartPage = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [success, setSuccess] = useState<Boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [showSplash, setShowSplash] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
@@ -63,6 +65,9 @@ const InitCartPage = () => {
       );
     })
   );
+  setTimeout(() => {
+    setShowSplash(false);
+  }, 2500);
 
   useEffect(() => {
     const transformItems = (data: any) => {
@@ -71,23 +76,24 @@ const InitCartPage = () => {
       });
       setData(data);
     };
-    getItemsFromCart(
-      {
-        url: `https://prod-138.westeurope.logic.azure.com/workflows/a66a3ae4989f47ef9aeb1a8b4158d554/triggers/manual/paths/invoke/ids/${searchParams.get(
-          "id"
-        )}
+    !showSplash &&
+      getItemsFromCart(
+        {
+          url: `https://prod-138.westeurope.logic.azure.com/workflows/a66a3ae4989f47ef9aeb1a8b4158d554/triggers/manual/paths/invoke/ids/${searchParams.get(
+            "id"
+          )}
       ?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=YpXCYZROZ0tRlysYusCsu-xEoBcqMVjyoTmqBQ-c6Lw`,
-      },
-      transformItems
-    );
+        },
+        transformItems
+      );
     return () => {
       setData({});
     };
-  }, [getItemsFromCart, searchParams]);
+  }, [getItemsFromCart, searchParams, showSplash]);
 
   const closeModal = () => {
     if (success) {
-      navigate(`/resultsPage?id=${data.id}`);
+      navigate(`/votingPage?id=${data.id}`);
     }
     if (!isLoadingSendItems || !data.enabled) setShowModal(false);
   };
@@ -96,12 +102,11 @@ const InitCartPage = () => {
     !counterOfSelectedItems && setMessage("You need to add items");
     const responseDate = (data: any) => {
       isErrorSendItems && setMessage("Try again!");
-      // if (data) setSuccess(true);
       if (data) {
-        navigate(`/resultsPage?id=${data.id}`, {state: {from: location.pathname}});
+        navigate(`/votingPage?id=${data.id}`, {
+          state: { from: location.pathname },
+        });
       }
-      // : data.products &&
-      //   setMessage("Your items are on the way to your friends!");
     };
     if (counterOfSelectedItems && data.enabled) {
       sendItemsToVote(
@@ -118,7 +123,9 @@ const InitCartPage = () => {
     }
   };
 
-  return (
+  return showSplash ? (
+    <SplashScreen />
+  ) : (
     <BasePage>
       <BasePage.Header>
         <BasePage.Title />
@@ -136,7 +143,8 @@ const InitCartPage = () => {
           message={message}
           showModal={showModal}
           setShowModal={setShowModal}
-          closeModal={closeModal}></Modal>
+          closeModal={closeModal}
+        ></Modal>
       )}
     </BasePage>
   );

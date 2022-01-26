@@ -1,59 +1,93 @@
+import { useEffect, useState } from "react";
+import { Vote } from "../../../types";
+import Dropdown from "../../Dropdown/Dropdown";
+import SmilesResults from "../../Smile/SmilesResult";
 import BaseItem from "../BaseItem";
-import cartIcon from "../../../assets/icons/cart.svg";
+import dropdownIcon from "../../../assets/icons/downIcon.svg";
+import { HeaderItemInit } from "../style";
 import {
-  Icon,
-  AddComment,
-  Voting,
-  InputValue,
-  InputContainer,
-  Input,
+  BodyContainer,
+  CommentItem,
+  ImageContainer,
+  Image,
+  ImageTitle,
+  Row,
+  SumOfVotes,
+  ButtonDropdown,
 } from "./style";
-import { HeaderItemInit, IconButton } from "../style";
-import { useState } from "react";
-import { Row } from "../ItemVote/style";
-import Smiles from "../../Smile/Smiles";
 
 export interface ItemProps {
   image: string;
   title: string;
   price: string;
-  onAddVotingValue: (value: string) => void;
-  onAddComment: (comment: string) => void;
+  votes: Vote[];
 }
-const ItemResult = (props: ItemProps) => {
-  const [commentValue, setCommentValue] = useState<string>("");
-  const [votingValue, setVotingValue] = useState<string>("");
+export const smiles = [
+  { name: "No!", value: 0 },
+  { name: "Not sure", value: 1 },
+  { name: "Maybe", value: 2 },
+  { name: "Nice!", value: 3 },
+  { name: "Love it!", value: 4 },
+];
+const ItemVote = (props: ItemProps) => {
+  const [sumOfVotes, setSumOfVotes] = useState<number>(0);
+  const [avrerageVotes, setAverageVotes] = useState(0);
+  const [sumOfComments, setSumOfComments] = useState<number>(0);
+  const [comment, setComment] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  const commentChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    setCommentValue(e.currentTarget.value);
-    props.onAddComment(e.currentTarget.value);
-  };
-  const voteChangeHandler = (value: string) => {
-    setVotingValue(value);
-    props.onAddVotingValue(value);
-  };
+  useEffect(() => {
+    let sumVotes = 0,
+      sumComments = 0,
+      averageVotes = 0;
+    props.votes &&
+      props.votes.forEach((voteItem: any) => {
+        const smile = smiles.find(({ name }) => name === voteItem.vote);
+        if (smile) {
+          averageVotes += smile.value;
+        }
+        voteItem.vote && sumVotes++;
+        voteItem.comment && sumComments++;
+        if (voteItem.comment && !comment) setComment(voteItem.comment);
+      });
+    setAverageVotes(Math.round((averageVotes /= sumVotes)));
+    setSumOfVotes(sumVotes);
+    setSumOfComments(sumComments);
+  }, [props.votes]);
+
   return (
     <BaseItem>
-      <BaseItem.Image {...props} />
+      <ImageContainer>
+        <Image src={props.image}></Image>
+        <ImageTitle>
+          {smiles.find(({ value }) => value === avrerageVotes)?.name}
+        </ImageTitle>
+      </ImageContainer>
+
       <BaseItem.Body>
-        <Row>
-          <HeaderItemInit>
-            <BaseItem.Title {...props} />
-            <BaseItem.Price {...props} />
-          </HeaderItemInit>
-          <Icon src={cartIcon} />
-        </Row>
-        <Smiles onVote={voteChangeHandler} />
-        <InputContainer>
-          <Input
-            placeholder="Add a comment"
-            type="text"
-            value={commentValue}
-            onChange={commentChangeHandler}
-          ></Input>
-        </InputContainer>
+        <HeaderItemInit>
+          <BaseItem.Title {...props} />
+          <BaseItem.Price {...props} />
+        </HeaderItemInit>
+        <BodyContainer>
+          <SmilesResults result={avrerageVotes} />
+          <Row>
+            <SumOfVotes>{sumOfVotes} votes</SumOfVotes>
+            {sumOfComments > 0 && <span>, {sumOfComments} comments</span>}
+          </Row>
+          {sumOfComments === 0 ? (
+            <CommentItem>No Comments</CommentItem>
+          ) : (
+            <CommentItem>{comment}</CommentItem>
+          )}
+          <ButtonDropdown
+            src={dropdownIcon}
+            onClick={() => setShowDropdown(!showDropdown)}
+          ></ButtonDropdown>
+        </BodyContainer>
+        {showDropdown && <Dropdown votes={props.votes} />}
       </BaseItem.Body>
     </BaseItem>
   );
 };
-export default ItemResult;
+export default ItemVote;

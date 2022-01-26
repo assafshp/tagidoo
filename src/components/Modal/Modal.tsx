@@ -21,7 +21,6 @@ export const Modal = (props: ModalProps) => {
     (e) => {
       if (e.key === "Escape" && props.showModal) {
         props.setShowModal(false);
-        console.log("I pressed");
       }
     },
     [setShowModal, showModal]

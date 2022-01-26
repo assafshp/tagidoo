@@ -1,61 +1,56 @@
-import { useEffect, useState } from "react";
-import { Vote } from "../../../types";
-import Smiles from "../../Smile/Smiles";
 import BaseItem from "../BaseItem";
-import { HeaderItemInit } from "../style";
+import cartIcon from "../../../assets/icons/cart.svg";
 import {
-  BodyContainer,
-  CommentItem,
-  Row,
-  Square,
-  SumOfVotes,
+  Icon,
+  InputContainer,
+  Input,
 } from "./style";
+import { HeaderItemInit } from "../style";
+import { useState } from "react";
+import { Row } from "../ItemResult/style";
+import SmilesVote from "../../Smile/SmilesVote";
 
 export interface ItemProps {
   image: string;
   title: string;
   price: string;
-  votes: Vote[];
+  onAddVotingValue: (value: string) => void;
+  onAddComment: (comment: string) => void;
 }
+const ItemResult = (props: ItemProps) => {
+  const [commentValue, setCommentValue] = useState<string>("");
+  const [votingValue, setVotingValue] = useState<string>("");
 
-const ItemVote = (props: ItemProps) => {
-  const [sumOfVotes, setSumOfVotes] = useState<number>(0);
-  const [sumOfComments, setSumOfComments] = useState<number>(0);
-  const [comment, setComment] = useState("");
-
-  useEffect(() => {
-    let sumVotes = 0,
-      sumComments = 0;
-    props.votes && props.votes.forEach((voteItem) => {
-      voteItem.vote && sumVotes++;
-      voteItem.comment && sumComments++;
-      if(voteItem.comment && !comment) setComment(voteItem.comment)
-    });
-    setSumOfVotes(sumVotes);
-    setSumOfComments(sumComments);
-  }, [props.votes]);
-
+  const commentChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setCommentValue(e.currentTarget.value);
+    props.onAddComment(e.currentTarget.value);
+  };
+  const voteChangeHandler = (value: string) => {
+    setVotingValue(value);
+    props.onAddVotingValue(value);
+  };
   return (
     <BaseItem>
       <BaseItem.Image {...props} />
       <BaseItem.Body>
-        <HeaderItemInit>
-          <BaseItem.Title {...props} />
-          <BaseItem.Price {...props} />
-        </HeaderItemInit>
-        <BodyContainer>
-          <Smiles/>
-          <Row>
-            <SumOfVotes>{sumOfVotes} votes</SumOfVotes>
-            {sumOfComments > 0 && <span>, {sumOfComments} comments</span>}
-          </Row>
-          {sumOfComments === 0 ?
-            <CommentItem>No Comments</CommentItem> : 
-            <CommentItem>{comment}</CommentItem>
-          }
-        </BodyContainer>
+        <Row>
+          <HeaderItemInit>
+            <BaseItem.Title {...props} />
+            <BaseItem.Price {...props} />
+          </HeaderItemInit>
+          <Icon src={cartIcon} />
+        </Row>
+        <SmilesVote onVote={voteChangeHandler} />
+        <InputContainer>
+          <Input
+            placeholder="Add a comment"
+            type="text"
+            value={commentValue}
+            onChange={commentChangeHandler}
+          ></Input>
+        </InputContainer>
       </BaseItem.Body>
     </BaseItem>
   );
 };
-export default ItemVote;
+export default ItemResult;
