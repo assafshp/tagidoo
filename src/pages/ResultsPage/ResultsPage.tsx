@@ -6,6 +6,7 @@ import { ItemType } from "../../types";
 import BasePage from "../BasePage";
 import { useSearchParams } from "react-router-dom";
 import { Message } from "../InitCartPage/style";
+import cartIcon from '../../assets/icons/cartIconwhite.svg';
 
 const ResultsPage = () => {
   const [data, setData] = useState<any>({});
@@ -84,7 +85,7 @@ const ResultsPage = () => {
       </BasePage.Header>
       <BasePage.Body>{content}</BasePage.Body>
       <BasePage.Footer>
-        <BasePage.Button onClick={onDoneVoting}>
+        <BasePage.Button img={cartIcon} onClick={onDoneVoting}>
           Stop rating, go shopping
         </BasePage.Button>
       </BasePage.Footer>

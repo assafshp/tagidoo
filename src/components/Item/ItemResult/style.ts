@@ -41,9 +41,14 @@ export const ButtonDropdown = styled.img`
   cursor: pointer;
   height: 30px;
   filter: sepia(100%) hue-rotate(190deg) saturate(500%);
+  transition: transform 300ms ease-in-out 0s;
   position: absolute;
   bottom: 0;
   right: 0;
+
+  &:focus{
+    transform: rotate(180deg);
+  }
 `;
 export const CommentItem = styled.div`
   width: 160px;

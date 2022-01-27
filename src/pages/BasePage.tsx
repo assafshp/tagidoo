@@ -1,13 +1,15 @@
-import logo from "../assets/icons/logo.svg";
+import logo from "../assets/icons/TAGIDOO_E-03.svg";
 
 import {
   Container,
   Body,
-  Title,
   Subtitle,
   Header,
   Footer,
   SquareButton,
+  IconBtn,
+  TitleContainer,
+  Logo,
 } from "./style";
 
 const BasePage = (props: any) => {
@@ -22,7 +24,11 @@ BasePage.Header = function BasePageHeader(props: any) {
 };
 
 BasePage.Title = function BasePageTitle() {
-  return <Title src={logo}></Title>;
+  return (
+    <TitleContainer>
+      <Logo src={logo}></Logo>
+    </TitleContainer>
+  );
 };
 BasePage.Subtitle = function BasePageSubtitle(props: any) {
   return <Subtitle>{props.children}</Subtitle>;
@@ -31,7 +37,12 @@ BasePage.Footer = function BasePageFooter(props: any) {
   return <Footer>{props.children}</Footer>;
 };
 BasePage.Button = function BasePageButton(props: any) {
-  return <SquareButton {...props}>{props.children}</SquareButton>;
+  return (
+    <SquareButton {...props}>
+      <IconBtn src={props.img}></IconBtn>
+      {props.children}
+    </SquareButton>
+  );
 };
 
 export default BasePage;

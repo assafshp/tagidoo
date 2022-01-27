@@ -1,10 +1,11 @@
-import logo from "../../assets/icons/tagido-logo.svg";
+import logo from "../../assets/icons/tagido-splash.svg";
 import { BackgroundScreen, Logo } from "./style";
 
-const SplashScreen = () => {
+const SplashScreen = (props: any) => {
   return (
     <BackgroundScreen>
       <Logo src={logo}></Logo>
+      {props.children }
     </BackgroundScreen>
   );
 };

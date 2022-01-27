@@ -32,12 +32,28 @@ export const ModalWrapper = styled.div`
 export const ModalContent = styled.div`
   width: 80%;
 `;
+export const IconCloseBtn = styled.div`
+  height: 30px;
+  width: 30px;
+  background: transparent;
+  border: 2px white solid;
+  border-radius: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 30px;
+`;
 export const CloseModalButton = styled.button`
   cursor: pointer;
+  height: 50px;
+  padding:15px;
+  margin:10px;
   background-color: #45d9d5;
   border: none;
   border-radius: 20px;
-  width: 50%;
-  height: 15%;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
 `;

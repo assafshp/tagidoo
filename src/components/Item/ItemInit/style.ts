@@ -4,7 +4,7 @@ import Button from "../../Button/Button";
 export const ButtonItem = styled(Button)`
   border-radius: 80%;
   margin-right: 10px;
-  width: 80px;
+  width: 60px;
 `;
 export const BodyInitItem = styled.div`
   width: 100%;

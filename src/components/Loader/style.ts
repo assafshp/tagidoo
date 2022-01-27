@@ -8,7 +8,3 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const Message = styled.div`
-  font-size: 12px;
-  padding-top: 10px;
-`;

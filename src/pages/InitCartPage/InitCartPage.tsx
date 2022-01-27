@@ -4,11 +4,15 @@ import useHttp from "../../hooks/useHttp";
 import { useSearchParams } from "react-router-dom";
 import BasePage from "../BasePage";
 import { ItemType } from "../../types";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Modal from "../../components/Modal/Modal";
-import { Message } from "./style";
+import { Link, Message, SharePage } from "./style";
 import SplashScreen from "../SplashScreen/SplashScreen";
+import continueIcon from "../../assets/icons/continueIcon.svg";
+import { CloseModalButton, IconCloseBtn } from "../../components/Modal/style";
+import { IconBtn } from "../style";
+import iconSave from "../../assets/icons/saveIcon.svg";
 
 const InitCartPage = () => {
   let counterOfSelectedItems = 0;
@@ -18,8 +22,8 @@ const InitCartPage = () => {
   const [message, setMessage] = useState<string>("");
   const [showSplash, setShowSplash] = useState(true);
   const navigate = useNavigate();
-  const location = useLocation();
   const [searchParams] = useSearchParams();
+  const [id, setId] = useState<string | null>();
 
   const {
     isLoading: isLoadingItems,
@@ -65,9 +69,14 @@ const InitCartPage = () => {
       );
     })
   );
-  setTimeout(() => {
-    setShowSplash(false);
-  }, 2500);
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 2500);
+    setId(searchParams.get("id"));
+    return () => {
+      clearTimeout(timer);
+      setId("");
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const transformItems = (data: any) => {
@@ -79,9 +88,7 @@ const InitCartPage = () => {
     !showSplash &&
       getItemsFromCart(
         {
-          url: `https://prod-138.westeurope.logic.azure.com/workflows/a66a3ae4989f47ef9aeb1a8b4158d554/triggers/manual/paths/invoke/ids/${searchParams.get(
-            "id"
-          )}
+          url: `https://prod-138.westeurope.logic.azure.com/workflows/a66a3ae4989f47ef9aeb1a8b4158d554/triggers/manual/paths/invoke/ids/${id}
       ?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=YpXCYZROZ0tRlysYusCsu-xEoBcqMVjyoTmqBQ-c6Lw`,
         },
         transformItems
@@ -92,10 +99,7 @@ const InitCartPage = () => {
   }, [getItemsFromCart, searchParams, showSplash]);
 
   const closeModal = () => {
-    if (success) {
-      navigate(`/votingPage?id=${data.id}`);
-    }
-    if (!isLoadingSendItems || !data.enabled) setShowModal(false);
+    setShowModal(false);
   };
   const onAskFriends = async () => {
     setShowModal(true);
@@ -103,9 +107,8 @@ const InitCartPage = () => {
     const responseDate = (data: any) => {
       isErrorSendItems && setMessage("Try again!");
       if (data) {
-        navigate(`/votingPage?id=${data.id}`, {
-          state: { from: location.pathname },
-        });
+        setSuccess(true);
+        setShowSplash(true);
       }
     };
     if (counterOfSelectedItems && data.enabled) {
@@ -122,9 +125,38 @@ const InitCartPage = () => {
       );
     }
   };
-
+  
   return showSplash ? (
-    <SplashScreen />
+    <SplashScreen>
+      {
+        success && <SharePage>  
+          <p>Share this page with your friends!</p>
+          <Link
+            data-share="http://web.whatsapp.com/send?text=[link]"
+            href={
+              `http://web.whatsapp.com/send?text=https://gray-field-033fe9e03-6.westeurope.1.azurestaticapps.net/votingPage?id=` +
+              id
+            }
+          >
+            <CloseModalButton>
+              <IconCloseBtn>
+                <IconBtn src={iconSave} />
+              </IconCloseBtn>
+              Share
+            </CloseModalButton>
+          </Link>
+          <CloseModalButton
+            style={{ marginTop: "80px" }}
+            onClick={() => navigate(`/resultsPage?id=${id}`)}
+          >
+            <IconCloseBtn>
+              <IconBtn src={iconSave} />
+            </IconCloseBtn>
+            See whats your friends said
+          </CloseModalButton>
+        </SharePage>
+      }
+    </SplashScreen>
   ) : (
     <BasePage>
       <BasePage.Header>
@@ -133,8 +165,7 @@ const InitCartPage = () => {
       </BasePage.Header>
       <BasePage.Body>{content}</BasePage.Body>
       <BasePage.Footer>
-        {/* {isLoadingSendItems && <Loader loading={true} size={30} />} */}
-        <BasePage.Button onClick={onAskFriends}>
+        <BasePage.Button onClick={onAskFriends} img={continueIcon}>
           Continue
         </BasePage.Button>
       </BasePage.Footer>

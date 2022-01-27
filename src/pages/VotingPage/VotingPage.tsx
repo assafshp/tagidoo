@@ -3,37 +3,22 @@ import ItemVote from "../../components/Item/ItemVote/ItemVote";
 import useHttp from "../../hooks/useHttp";
 import { ItemType } from "../../types";
 import BasePage from "../BasePage";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import {
-  HeaderContainer,
-  IconMessage,
-  InputContainer,
-  InputMessage,
-  InputTitle,
-  Link,
-} from "./style";
+import { useSearchParams } from "react-router-dom";
+import { InputContainer, InputMessage, Link } from "./style";
 import Loader from "../../components/Loader/Loader";
 import { Modal } from "../../components/Modal/Modal";
 import { Message } from "../InitCartPage/style";
-import iconStore from "../../assets/icons/iconStore.svg";
+import iconSend from "../../assets/icons/sendIcon.svg";
 
 const VotingPage = (props: any) => {
   const [data, setData] = useState<any>({});
   const [voterName, setVoterName] = useState<string>(
     localStorage.getItem("voterName") || ""
   );
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(true);
   const [success, setSuccess] = useState<Boolean>(false);
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>("You must enter name");
   const [searchParams] = useSearchParams();
-  const { state }: any = useLocation();
-
-  useEffect(() => {
-    state &&
-      state.from === "/initCartPage" &&
-      setMessage(`Now it's time to share this page with your friends!`);
-    setShowModal(true);
-  }, [state]);
 
   const {
     isLoading: isLoadingItems,
@@ -117,24 +102,12 @@ const VotingPage = (props: any) => {
       setData({});
     };
   }, [getItemsToVoting, searchParams]);
-  let openedWindow: any;
 
-  function openWindow() {
-    openedWindow = window.open('moreinfo.htm');
-  }
   const closeModal = () => {
-    // if (success) {
-    //   navigate(`/resultsPage?id=${data.id}`);
-    // }
-    // success && openedWindow.close();
     setShowModal(false);
   };
-
   const onSendVoting = async () => {
-    setShowModal(true);
-    if (!voterName) {
-      setMessage("You must enter name");
-    } else {
+    if (voterName) {
       setMessage("");
       localStorage.setItem("voterName", voterName);
       data.products.forEach((product: any) => {
@@ -149,10 +122,15 @@ const VotingPage = (props: any) => {
             : (product.votes[0].voterName = voterName);
         }
       });
+    } else {
+      setShowModal(true);
     }
     const responseDate = (data: any) => {
       errorSendResults ? setMessage("Try again!") : setMessage("");
-      data && setSuccess(true);
+      if (data) {
+        setSuccess(true);
+        setShowModal(true);
+      }
     };
     voterName &&
       data.products.length &&
@@ -168,7 +146,6 @@ const VotingPage = (props: any) => {
         responseDate
       );
   };
-
   return (
     <BasePage>
       <BasePage.Header>
@@ -177,22 +154,19 @@ const VotingPage = (props: any) => {
       </BasePage.Header>
       <BasePage.Body>{content}</BasePage.Body>
       <BasePage.Footer>
-        {isLoadingSendResults && <Loader loading={true} size={30} />}
-        <BasePage.Button onClick={onSendVoting}>Send</BasePage.Button>
+        <BasePage.Button img={iconSend} onClick={onSendVoting}>
+          Send
+        </BasePage.Button>
       </BasePage.Footer>
-      {!isLoadingSendResults && !errorSendResults && !isLoadingItems && (
+      {!isLoadingItems && (
         <Modal
           message={message}
           showModal={showModal}
           setShowModal={setShowModal}
           closeModal={closeModal}
         >
-          {!success && !state ? (
+          {!success ? (
             <InputContainer>
-              <HeaderContainer>
-                <IconMessage src={iconStore}></IconMessage>
-                <InputTitle>Be friendly</InputTitle>
-              </HeaderContainer>
               <InputMessage
                 placeholder="Write your name"
                 type="text"
@@ -203,13 +177,11 @@ const VotingPage = (props: any) => {
           ) : (
             success && (
               <div>
-                <HeaderContainer>
-                  <IconMessage src={iconStore}></IconMessage>
-                  <InputTitle>Be friendly</InputTitle>
-                </HeaderContainer>
                 <p>Thank you for your friendly feedback!</p>
-                  <p style={{display: 'contents'}}>To download tagidoo click </p>
-                  <Link href={"https://www.tagidoo.com"}>here</Link>
+                <p style={{ display: "contents" }}>
+                  To download tagidoo click{" "}
+                </p>
+                <Link href={"https://www.tagidoo.com"}>here</Link>
               </div>
             )
           )}

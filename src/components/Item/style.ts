@@ -35,7 +35,7 @@ export const Title = styled.div`
   color: ${COLORS.color_grey};
 `;
 export const Price = styled.div`
-  font-weight: bold;
+  font-weight: 500;
   padding-top: 10px;
   color: ${COLORS.color_grey};
 `;

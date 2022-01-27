@@ -16,12 +16,13 @@ export const DropdownContainer = styled.div`
   left: 0;
   z-index: 2;
   padding: 20px 0;
+  font-size: 12px;
 `;
 export const VotesContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 80%;
+  width: 90%;
   color: #707070;
   & > div:not(:last-child) {
     border-right: 2px solid ${COLORS.color_lightblue};

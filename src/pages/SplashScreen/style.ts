@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const BackgroundScreen = styled.div`
   background-color: #00a9ff;
   height: 100%;
-  max-width: 600px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;

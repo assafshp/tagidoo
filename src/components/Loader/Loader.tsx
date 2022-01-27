@@ -1,6 +1,7 @@
-import { ClipLoader } from "react-spinners";
 import { COLORS } from "../../theme";
-import { Message, Wrapper } from "./style";
+import { Wrapper } from "./style";
+import { SpinnerDotted } from "spinners-react";
+import logo from "../../assets/icons/TAGIDOO_E-03.svg";
 
 interface LoaderProps {
   loading: boolean;
@@ -11,12 +12,8 @@ interface LoaderProps {
 const Loader = (props: LoaderProps) => {
   return props.loading ? (
     <Wrapper>
-      <ClipLoader
-        size={props.size ? props.size : 70}
-        color={COLORS.color_lightblue}
-        loading={props.loading}
-      />
-      <Message>{props.message}</Message>
+      <img style={{ height: "100px" }} src={logo} />
+      <SpinnerDotted size={70} color={COLORS.color_lightblue} />
     </Wrapper>
   ) : null;
 };

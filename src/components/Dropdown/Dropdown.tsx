@@ -13,15 +13,15 @@ const Dropdown = (props: any) => {
   return (
     <DropdownContainer>
       <VotesContainer>
-        {icons.map((icon) => {
+        {icons.map((icon,i) => {
           return (
-            <Column>
-              <Col>
-                <p>{icon.name}</p>
+            <Column key={i}>
+              <Col style={{paddingBottom: '10px'}}>
+                <p style={{paddingBottom: '10px'}}>{icon.name}</p>
                 <Icon src={icon.src}></Icon>
               </Col>
-              {props.votes.map((el: any) => {
-                return el.vote === icon.name && <p>{el.voterName}</p>;
+              {props.votes.map((el: any,i:number) => {
+                return el.vote === icon.name && <p key={i}>{el.voterName}</p>;
               })}
             </Column>
           );
@@ -31,7 +31,7 @@ const Dropdown = (props: any) => {
         {props.votes.map((el: any,i:number) => {
           return (
             el.vote && (
-              <VoteRow key={i}>
+              <VoteRow style={{paddingTop: '10px'}} key={i}>
                 <SmallIcon
                   src={icons.find(({ name }) => name === el.vote)?.src}
                 ></SmallIcon>
