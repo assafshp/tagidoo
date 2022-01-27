@@ -41,7 +41,7 @@ export const IconCloseBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 30px;
+  margin-right: 10px;
 `;
 export const CloseModalButton = styled.button`
   cursor: pointer;

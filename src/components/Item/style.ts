@@ -29,13 +29,12 @@ export const HeaderItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 14px;
 `;
 export const Title = styled.div`
   color: ${COLORS.color_grey};
 `;
 export const Price = styled.div`
-  font-weight: 500;
+  font-size: 18px;
   padding-top: 10px;
   color: ${COLORS.color_grey};
 `;

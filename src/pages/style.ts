@@ -17,7 +17,7 @@ export const TitleContainer = styled.div`
     #45d9d5
   );
   width: 100%;
-  height: 100%;
+  height: 50%;
 
   display: flex;
   justify-content: center;
@@ -41,7 +41,7 @@ export const Body = styled.div`
   }
 `;
 export const Header = styled.div`
-  height: 15%;
+  height: 20%;
   font-size: 18px;
   line-height: 32px;
   font-weight: bold;
@@ -53,7 +53,8 @@ export const Header = styled.div`
 
 export const Subtitle = styled.div`
   font-size: 20px;
-  padding:15px;
+  height: 50%;
+  padding: 15px;
   width: 100%;
   text-align: center;
   background-color: #faf8f8;
@@ -67,7 +68,7 @@ export const Logo = styled.img`
   padding-top: 30px;
 `;
 export const Footer = styled.div`
-  height: 15%;
+  height: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;

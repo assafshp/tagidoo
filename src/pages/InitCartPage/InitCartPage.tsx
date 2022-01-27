@@ -7,12 +7,13 @@ import { ItemType } from "../../types";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Modal from "../../components/Modal/Modal";
-import { Link, Message, SharePage } from "./style";
+import { CloseButton, Link, Message, SharePage } from "./style";
 import SplashScreen from "../SplashScreen/SplashScreen";
 import continueIcon from "../../assets/icons/continueIcon.svg";
 import { CloseModalButton, IconCloseBtn } from "../../components/Modal/style";
 import { IconBtn } from "../style";
 import iconSave from "../../assets/icons/saveIcon.svg";
+import { WhatsappShareButton, WhatsappIcon } from "react-share";
 
 const InitCartPage = () => {
   let counterOfSelectedItems = 0;
@@ -75,7 +76,7 @@ const InitCartPage = () => {
     return () => {
       clearTimeout(timer);
       setId("");
-    }
+    };
   }, [searchParams]);
 
   useEffect(() => {
@@ -125,26 +126,24 @@ const InitCartPage = () => {
       );
     }
   };
-  
+
   return showSplash ? (
     <SplashScreen>
-      {
-        success && <SharePage>  
+      {success && (
+        <SharePage>
           <p>Share this page with your friends!</p>
-          <Link
-            data-share="http://web.whatsapp.com/send?text=[link]"
-            href={
-              `http://web.whatsapp.com/send?text=https://gray-field-033fe9e03-6.westeurope.1.azurestaticapps.net/votingPage?id=` +
-              id
-            }
-          >
-            <CloseModalButton>
-              <IconCloseBtn>
-                <IconBtn src={iconSave} />
-              </IconCloseBtn>
-              Share
-            </CloseModalButton>
-          </Link>
+          <CloseButton>
+            <WhatsappShareButton
+              style={{ paddingRight: "10px" }}
+              url={
+                `https://gray-field-033fe9e03-6.westeurope.1.azurestaticapps.net/votingPage?id=` +
+                id
+              }
+            >
+              <WhatsappIcon size={32} round={true} />
+            </WhatsappShareButton>
+            Share
+          </CloseButton>
           <CloseModalButton
             style={{ marginTop: "80px" }}
             onClick={() => navigate(`/resultsPage?id=${id}`)}
@@ -155,7 +154,7 @@ const InitCartPage = () => {
             See whats your friends said
           </CloseModalButton>
         </SharePage>
-      }
+      )}
     </SplashScreen>
   ) : (
     <BasePage>
