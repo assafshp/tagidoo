@@ -111,16 +111,15 @@ const VotingPage = (props: any) => {
       setMessage("");
       localStorage.setItem("voterName", voterName);
       data.products.forEach((product: any) => {
-        if (product.selected) {
           const votes = [];
-          const objectVote = { voterName: "", vote: "", comment: "" };
+          const objectVote = { voterName: voterName, vote: "", comment: "" };
           votes.push(objectVote);
           !product.votes
             ? (product.votes = votes)
             : !product.votes[0]
             ? product.votes.push(objectVote)
             : (product.votes[0].voterName = voterName);
-        }
+
       });
     } else {
       setShowModal(true);
