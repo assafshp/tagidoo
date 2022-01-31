@@ -1,10 +1,19 @@
 import { useEffect, useCallback } from "react";
 import {
+  HeaderContainer,
+  IconMessage,
+  InputTitle,
+} from "../../pages/VotingPage/style";
+import {
   Background,
   CloseModalButton,
+  IconCloseBtn,
   ModalContent,
   ModalWrapper,
 } from "./style";
+import iconStore from "../../assets/icons/iconStore.svg";
+import iconSave from "../../assets/icons/saveIcon.svg";
+import { IconBtn } from "../../pages/style";
 
 interface ModalProps {
   showModal: Boolean;
@@ -21,7 +30,6 @@ export const Modal = (props: ModalProps) => {
     (e) => {
       if (e.key === "Escape" && props.showModal) {
         props.setShowModal(false);
-        console.log("I pressed");
       }
     },
     [setShowModal, showModal]
@@ -37,9 +45,18 @@ export const Modal = (props: ModalProps) => {
       {props.showModal ? (
         <Background>
           <ModalWrapper>
+            <HeaderContainer>
+              <IconMessage src={iconStore}></IconMessage>
+              <InputTitle>Be friendly</InputTitle>
+            </HeaderContainer>
             <ModalContent>{props.message}</ModalContent>
             {props.children}
-            <CloseModalButton onClick={props.closeModal}>Ok</CloseModalButton>
+            <CloseModalButton onClick={props.closeModal}>
+              <IconCloseBtn>
+                <IconBtn src={iconSave} />
+              </IconCloseBtn>
+              Save
+            </CloseModalButton>
           </ModalWrapper>
         </Background>
       ) : null}

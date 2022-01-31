@@ -11,5 +11,5 @@ export const ButtonStyled = styled.button`
   align-items: center;
 `;
 export const Icon = styled.img`
-  height: 17px;
+  height: 10px;
 `;
