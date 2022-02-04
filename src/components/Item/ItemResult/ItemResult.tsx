@@ -73,11 +73,6 @@ const ItemVote = (props: ItemProps) => {
           <SumOfVotes>{sumOfVotes} votes</SumOfVotes>
           {sumOfComments > 0 && <span>, {sumOfComments} comments</span>}
         </Row>
-        {sumOfComments === 0 ? (
-          <CommentItem>No Comments</CommentItem>
-        ) : (
-          <CommentItem>{comment}</CommentItem>
-        )}
         <ButtonDropdown
           src={dropdownIcon}
           onClick={() => setShowDropdown(!showDropdown)}

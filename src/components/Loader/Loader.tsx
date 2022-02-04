@@ -1,7 +1,7 @@
 import { COLORS } from "../../theme";
-import { Wrapper } from "./style";
-import { SpinnerDotted } from "spinners-react";
-import logo from "../../assets/icons/TAGIDOO_E-03.svg";
+import { Logo, Wrapper } from "./style";
+import { PulseLoader } from "react-spinners";
+import logo from "../../assets/icons/cartModal.svg";
 
 interface LoaderProps {
   loading: boolean;
@@ -12,8 +12,10 @@ interface LoaderProps {
 const Loader = (props: LoaderProps) => {
   return props.loading ? (
     <Wrapper>
-      <img style={{ height: "100px" }} src={logo} />
-      <SpinnerDotted size={70} color={COLORS.color_lightblue} />
+      <Logo src={logo} />
+      <div style={{ position: "absolute" }}>
+        <PulseLoader size={12} color={COLORS.color_lightblue} />
+      </div>
     </Wrapper>
   ) : null;
 };

@@ -55,5 +55,5 @@ export const CloseModalButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 16px;
 `;

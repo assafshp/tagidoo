@@ -24,6 +24,7 @@ export const ImageTitle = styled.div`
 export const ImageContainer = styled.div`
   position: relative;
   height: 90%;
+  width: 35%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,7 +47,7 @@ export const ButtonDropdown = styled.img`
   bottom: 0;
   right: 0;
 
-  &:focus{
+  &:focus {
     transform: rotate(180deg);
   }
 `;

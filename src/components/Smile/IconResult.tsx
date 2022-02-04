@@ -5,7 +5,7 @@ const IconVote = (props: any) => {
     <Col>
       <Icon
         src={props.src}
-        style={props.filter ? { filter: "grayscale(1)" } : { filter: "" }}
+        style={props.filter ? { filter: "grayscale(1)", opacity:"0.5" } : { filter: "" }}
       />
       <p>{props.name}</p>
     </Col>

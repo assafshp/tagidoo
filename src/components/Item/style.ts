@@ -22,6 +22,7 @@ export const Body = styled.div`
 `;
 export const ImageItem = styled.img`
   height: 90%;
+  width: 35%;
   object-fit: cover;
 `;
 export const HeaderItem = styled.div`

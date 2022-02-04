@@ -17,7 +17,7 @@ const VotingPage = (props: any) => {
   );
   const [showModal, setShowModal] = useState<boolean>(true);
   const [success, setSuccess] = useState<Boolean>(false);
-  const [message, setMessage] = useState<string>("You must enter name");
+  const [message, setMessage] = useState<string>("Enter your name");
   const [searchParams] = useSearchParams();
 
   const {
@@ -104,7 +104,7 @@ const VotingPage = (props: any) => {
   }, [getItemsToVoting, searchParams]);
 
   const closeModal = () => {
-    setShowModal(false);
+    window.open("https://www.tagidoo.com", "_blank");
   };
   const onSendVoting = async () => {
     if (voterName) {
@@ -163,6 +163,8 @@ const VotingPage = (props: any) => {
           showModal={showModal}
           setShowModal={setShowModal}
           closeModal={closeModal}
+          messageButton={"Download tagidoo"}
+          icon
         >
           {!success ? (
             <InputContainer>
@@ -177,10 +179,6 @@ const VotingPage = (props: any) => {
             success && (
               <div>
                 <p>Thank you for your friendly feedback!</p>
-                <p style={{ display: "contents" }}>
-                  To download tagidoo click{" "}
-                </p>
-                <Link href={"https://www.tagidoo.com"}>here</Link>
               </div>
             )
           )}

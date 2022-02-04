@@ -26,7 +26,7 @@ export const TitleContainer = styled.div`
 `;
 export const Body = styled.div`
   height: 70%;
-  padding: 20px;
+  padding: 10px;
   overflow: scroll;
 
   ::-webkit-scrollbar {

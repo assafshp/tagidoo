@@ -16,6 +16,6 @@ export const Col = styled.div`
   color: #707070;
 `;
 export const Icon = styled.img`
-  height: 35px;
+  height: 30px;
   cursor: pointer;
 `;

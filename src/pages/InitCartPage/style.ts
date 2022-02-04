@@ -28,9 +28,15 @@ export const SharePage = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   color: white;
 `;
+export const Div = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`
 export const Link = styled.a`
   display: flex;
   flex-direction: column;
