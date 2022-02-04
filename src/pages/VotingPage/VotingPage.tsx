@@ -104,7 +104,7 @@ const VotingPage = (props: any) => {
   }, [getItemsToVoting, searchParams]);
 
   const closeModal = () => {
-    window.open("https://www.tagidoo.com", "_blank");
+    success ? window.open("https://www.tagidoo.com", "_blank") : setShowModal(false);
   };
   const onSendVoting = async () => {
     if (voterName) {
@@ -163,8 +163,8 @@ const VotingPage = (props: any) => {
           showModal={showModal}
           setShowModal={setShowModal}
           closeModal={closeModal}
-          messageButton={"Download tagidoo"}
-          icon
+          messageButton={!success ? "save" : "Download tagidoo"}
+          icon = {!success ? true : false}
         >
           {!success ? (
             <InputContainer>

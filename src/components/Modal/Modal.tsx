@@ -54,7 +54,7 @@ export const Modal = (props: ModalProps) => {
             <ModalContent>{props.message}</ModalContent>
             {props.children}
             <CloseModalButton onClick={props.closeModal}>
-              {!props.icon && (
+              {props.icon && (
                 <IconCloseBtn>
                   <IconBtn src={iconSave} />
                 </IconCloseBtn>
