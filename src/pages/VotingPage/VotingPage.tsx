@@ -104,7 +104,7 @@ const VotingPage = (props: any) => {
   }, [getItemsToVoting, searchParams]);
 
   const closeModal = () => {
-    success ? window.open("https://www.tagidoo.com", "_blank") : setShowModal(false);
+    success ? window.open("https://www.tagidoo.shop", "_blank") : setShowModal(false);
   };
   const onSendVoting = async () => {
     if (voterName) {
