@@ -7,7 +7,7 @@ import { ItemType } from "../../types";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Modal from "../../components/Modal/Modal";
-import { CloseButton, Link, Message, SharePage } from "./style";
+import { Div, Message, SharePage } from "./style";
 import SplashScreen from "../SplashScreen/SplashScreen";
 import continueIcon from "../../assets/icons/continueIcon.svg";
 import { CloseModalButton, IconCloseBtn } from "../../components/Modal/style";
@@ -128,34 +128,34 @@ const InitCartPage = () => {
   };
 
   return showSplash ? (
-    <SplashScreen>
-      {success && (
+    success ? (
+      <SplashScreen small>
         <SharePage>
-          <p>Share this page with your friends!</p>
-          <CloseButton>
+          <Div>
+            <p style={{ fontSize: "20px" }}>
+              Share this page with your friends
+            </p>
             <WhatsappShareButton
-              style={{ paddingRight: "10px" }}
+              style={{ paddingTop: "25px" }}
               url={
-                `https://gray-field-033fe9e03.1.azurestaticapps.net/votingPage?id=` +
+                `https://gray-field-033fe9e03-8.westeurope.1.azurestaticapps.net/votingPage?id=` +
                 id
               }
             >
-              <WhatsappIcon size={32} round={true} />
+              <WhatsappIcon size={80} round={true} />
             </WhatsappShareButton>
-            Share
-          </CloseButton>
+          </Div>
           <CloseModalButton
             style={{ marginTop: "80px" }}
             onClick={() => navigate(`/resultsPage?id=${id}`)}
           >
-            <IconCloseBtn>
-              <IconBtn src={iconSave} />
-            </IconCloseBtn>
             See whats your friends said
           </CloseModalButton>
         </SharePage>
-      )}
-    </SplashScreen>
+      </SplashScreen>
+    ) : (
+      <SplashScreen />
+    )
   ) : (
     <BasePage>
       <BasePage.Header>

@@ -24,6 +24,8 @@ export const InputMessage = styled.input`
   background-color: transparent;
   color: white;
   text-align: center;
+  font-size: 18px;
+  width: 80%;
 
   &::placeholder {
     color: white;

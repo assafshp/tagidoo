@@ -13,3 +13,9 @@ export const Logo = styled.img`
   height: 50%;
   filter: brightness(0) invert(1);
 `;
+export const SmallLogo = styled.img`
+  width: 40%;
+  height: 40%;
+  filter: brightness(0) invert(1);
+`;
+

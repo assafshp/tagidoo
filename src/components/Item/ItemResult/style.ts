@@ -5,7 +5,8 @@ export const BodyContainer = styled.div`
   height: 50%;
 `;
 export const Image = styled.img`
-  height: 100%;
+  height: 150px;
+  width: 100px;
   object-fit: cover;
   border: 5px solid #00a9ff;
 `;
@@ -24,6 +25,7 @@ export const ImageTitle = styled.div`
 export const ImageContainer = styled.div`
   position: relative;
   height: 90%;
+  width: 35%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,7 +48,7 @@ export const ButtonDropdown = styled.img`
   bottom: 0;
   right: 0;
 
-  &:focus{
+  &:focus {
     transform: rotate(180deg);
   }
 `;

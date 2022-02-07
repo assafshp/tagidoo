@@ -8,3 +8,8 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+export const Logo = styled.img`
+  height: 100px;
+  filter: invert(50%) sepia(99%) saturate(2489%) hue-rotate(172deg)
+    brightness(101%) contrast(103%);
+`;

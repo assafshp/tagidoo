@@ -11,7 +11,7 @@ import {
   ModalContent,
   ModalWrapper,
 } from "./style";
-import iconStore from "../../assets/icons/iconStore.svg";
+import iconStore from "../../assets/icons/cartModal.svg";
 import iconSave from "../../assets/icons/saveIcon.svg";
 import { IconBtn } from "../../pages/style";
 
@@ -21,6 +21,8 @@ interface ModalProps {
   message: string;
   closeModal: () => void;
   children?: any;
+  messageButton?: string;
+  icon?: Boolean;
 }
 
 export const Modal = (props: ModalProps) => {
@@ -52,10 +54,12 @@ export const Modal = (props: ModalProps) => {
             <ModalContent>{props.message}</ModalContent>
             {props.children}
             <CloseModalButton onClick={props.closeModal}>
-              <IconCloseBtn>
-                <IconBtn src={iconSave} />
-              </IconCloseBtn>
-              Save
+              {props.icon && (
+                <IconCloseBtn>
+                  <IconBtn src={iconSave} />
+                </IconCloseBtn>
+              )}
+              {props.messageButton ? props.messageButton : "Save"}
             </CloseModalButton>
           </ModalWrapper>
         </Background>
