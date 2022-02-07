@@ -5,7 +5,8 @@ export const BodyContainer = styled.div`
   height: 50%;
 `;
 export const Image = styled.img`
-  height: 100%;
+  height: 150px;
+  width: 100px;
   object-fit: cover;
   border: 5px solid #00a9ff;
 `;

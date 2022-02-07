@@ -136,13 +136,13 @@ const InitCartPage = () => {
               Share this page with your friends
             </p>
             <WhatsappShareButton
-              style={{ paddingTop: "10px" }}
+              style={{ paddingTop: "25px" }}
               url={
                 `https://gray-field-033fe9e03-6.westeurope.1.azurestaticapps.net/votingPage?id=` +
                 id
               }
             >
-              <WhatsappIcon size={40} round={true} />
+              <WhatsappIcon size={80} round={true} />
             </WhatsappShareButton>
           </Div>
           <CloseModalButton

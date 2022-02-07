@@ -21,8 +21,8 @@ export const Body = styled.div`
   justify-content: space-between;
 `;
 export const ImageItem = styled.img`
-  height: 90%;
-  width: 35%;
+  height: 150px;
+  width: 100px;
   object-fit: cover;
 `;
 export const HeaderItem = styled.div`
