@@ -138,7 +138,7 @@ const InitCartPage = () => {
             <WhatsappShareButton
               style={{ paddingTop: "25px" }}
               url={
-                `https://gray-field-033fe9e03-8.westeurope.1.azurestaticapps.net/votingPage?id=` +
+                `https://gray-field-033fe9e03.1.azurestaticapps.net/votingPage?id=` +
                 id
               }
             >
