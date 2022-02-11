@@ -75,7 +75,6 @@ const InitCartPage = () => {
     async function getMockId (){
 
       const tmp = await fetch('https://prod-201.westeurope.logic.azure.com:443/workflows/e2f403f144454fde96c530f5556899de/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=AUznvoall_13uy_nwSwVSacxxWNaLWVhvrcDR6gUkVE');
-      // const tmp = await Promise.resolve("01be0ce0-1d9d-46f7-bde2-ee61767ad500");
       const res =  (await tmp.json()).id;
       setId(res);      
     }
