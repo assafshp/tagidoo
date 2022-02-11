@@ -71,8 +71,23 @@ const InitCartPage = () => {
     })
   );
   useEffect(() => {
+
+    async function getMockId (){
+
+      const tmp = await fetch('https://prod-201.westeurope.logic.azure.com:443/workflows/e2f403f144454fde96c530f5556899de/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=AUznvoall_13uy_nwSwVSacxxWNaLWVhvrcDR6gUkVE');
+      const res =  (await tmp.json()).id;
+      setId(res);      
+    }
+    
+
     const timer = setTimeout(() => setShowSplash(false), 2500);
-    setId(searchParams.get("id"));
+    const tmpId = searchParams.get("id");
+    if (!tmpId) {
+      getMockId();
+    } else {
+      setId(tmpId);
+    }
+    
     return () => {
       clearTimeout(timer);
       setId("");
